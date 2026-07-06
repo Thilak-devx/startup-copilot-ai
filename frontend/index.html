@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Copilot — Multi-Agent Intelligence Platform</title>
+    <meta name="description" content="Collaborative multi-agent platform for early-stage startup due diligence and valuation.">
+    <!-- Google Fonts: Inter, Lora (for McKinsey serif typography), & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <!-- Cinematic Loader Boot Screen -->
+    <div class="cinematic-loader" id="cinematic-boot-loader">
+        <div class="loader-logo-wrap">
+            <div class="loader-logo-pulse">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="var(--accent)" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h2 class="loader-title">Startup Copilot AI</h2>
+            <span class="loader-subtitle">Multi-Agent Intelligence Platform</span>
+        </div>
+        <div class="loader-track">
+            <div class="loader-bar" id="boot-loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Background Ambient Effects -->
+    <canvas id="particles-canvas"></canvas>
+    <canvas id="confetti-canvas"></canvas>
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <div class="app-container">
+        
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar" aria-label="Main Navigation">
+            <div class="brand">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="url(#brand-grad)" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="brand-grad" x1="2" y1="2" x2="22" y2="12" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFFFFF"/>
+                            <stop offset="1" stop-color="rgba(255,255,255,0.3)"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="brand-text">Startup Copilot</span>
+                <span class="brand-version">v2.0</span>
+            </div>
+
+            <nav class="nav-links">
+                <a href="#" class="nav-item active" data-view="dashboard" id="nav-dashboard">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" data-view="executive-summary" id="nav-executive-summary">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                    Executive Brief
+                </a>
+                <a href="/analytics" target="_blank" class="nav-item" id="nav-analytics">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line><rect x="2" y="20" width="20" height="1"></rect></svg>
+                    Analytics ↗
+                </a>
+                <a href="#" class="nav-item" data-view="new-analysis" id="nav-new-analysis">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    New Analysis
+                </a>
+                <a href="#" class="nav-item" data-view="history" id="nav-history">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    History
+                </a>
+                <a href="#" class="nav-item" data-view="workflow" id="nav-workflow">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"></circle><circle cx="19" cy="5" r="2"></circle><circle cx="19" cy="19" r="2"></circle><path d="M7 12h10M17 7l2 3M17 17l2-3"></path></svg>
+                    Workflow
+                </a>
+                <a href="#" class="nav-item" data-view="reports" id="nav-reports">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Reports
+                </a>
+                <a href="#" class="nav-item" data-view="settings" id="nav-settings">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    Settings
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">SC</div>
+                    <div class="user-info">
+                        <div class="user-name">Founder Sandbox</div>
+                        <div class="user-role">Premium Account</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-layout">
+            
+            <!-- Top Navigation / Header -->
+            <header class="top-nav" aria-label="Status Bar">
+                <div class="top-nav-left">
+                    <span class="active-startup-label">Active Startup:</span>
+                    <span class="active-startup-value" id="header-startup-name">Solarex</span>
+                    <span class="status-badge status-idle" id="header-status-badge">Idle</span>
+                </div>
+                <div class="top-nav-right">
+                    <button class="btn btn-demo" id="btn-demo-mode" title="Run Interactive YC Demo">
+                        ⚡ YC Demo Mode
+                    </button>
+                    <button class="btn btn-secondary btn-icon-only" id="btn-export-md" title="Export Markdown">
+                        Markdown
+                    </button>
+                    <button class="btn btn-primary" id="btn-export-pdf">
+                        Export PDF
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Content View -->
+            <div class="view-content active" id="view-dashboard">
+                
+                <!-- Hero & Key Scores -->
+                <section class="hero-section">
+                    <div class="hero-info">
+                        <h1 class="hero-title" id="hero-startup-title">Solarex</h1>
+                        <p class="hero-desc" id="hero-startup-desc">An AI-powered platform for optimizing community solar energy sharing.</p>
+                        <div class="hero-meta">
+                            <span class="meta-tag" id="meta-industry">CleanTech</span>
+                            <span class="meta-tag" id="meta-stage">Seed</span>
+                            <span class="meta-tag" id="meta-pricing">10% Transaction Fee</span>
+                        </div>
+                    </div>
+                    
+                    <div class="scores-grid">
+                        <div class="score-card accent">
+                            <div class="score-circle">
+                                <svg class="progress-ring" width="56" height="56">
+                                    <circle class="progress-ring-bg" cx="28" cy="28" r="25"></circle>
+                                    <circle class="progress-ring-fill" id="gauge-startup" cx="28" cy="28" r="25" stroke-dasharray="157" stroke-dashoffset="157"></circle>
+                                </svg>
+                                <span class="score-value" id="val-startup-score">0</span>
+                            </div>
+                            <div class="score-info">
+                                <span class="score-label">Startup Score</span>
+                                <span class="score-desc">Product & growth potential</span>
+                            </div>
+                        </div>
+                        <div class="score-card primary">
+                            <div class="score-circle">
+                                <svg class="progress-ring" width="56" height="56">
+                                    <circle class="progress-ring-bg" cx="28" cy="28" r="25"></circle>
+                                    <circle class="progress-ring-fill" id="gauge-readiness" cx="28" cy="28" r="25" stroke-dasharray="157" stroke-dashoffset="157"></circle>
+                                </svg>
+                                <span class="score-value" id="val-investment-score">0</span>
+                            </div>
+                            <div class="score-info">
+                                <span class="score-label">Investment Score</span>
+                                <span class="score-desc">VC alignment & metrics</span>
+                            </div>
+                        </div>
+                        <div class="score-card warning">
+                            <div class="score-circle">
+                                <svg class="progress-ring" width="56" height="56">
+                                    <circle class="progress-ring-bg" cx="28" cy="28" r="25"></circle>
+                                    <circle class="progress-ring-fill" id="gauge-confidence" cx="28" cy="28" r="25" stroke-dasharray="157" stroke-dashoffset="157"></circle>
+                                </svg>
+                                <span class="score-value" id="val-confidence-score">0</span>
+                            </div>
+                            <div class="score-info">
+                                <span class="score-label">Overall Confidence</span>
+                                <span class="score-desc">Data coverage certainty</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="dashboard-grid">
+                    
+                    <!-- Left Column: Agent Cards and Execution Timeline -->
+                    <div class="dash-col-left">
+                        
+                        <!-- Timeline Section -->
+                        <div class="section-card">
+                            <h2 class="section-title">Workflow Execution Trace</h2>
+                            <div class="timeline" id="timeline-flow">
+                                <!-- Timeline items injected dynamically via app.js -->
+                            </div>
+                        </div>
+
+                        <!-- Agent Output Cards -->
+                        <div class="section-card">
+                            <h2 class="section-title">Collaborative Agent Workspace</h2>
+                            <div class="agent-cards-container" id="agent-cards-grid">
+                                <!-- Agent cards injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Visualizations & Verdicts -->
+                    <div class="dash-col-right">
+                        
+                        <!-- Executive Summary Panel -->
+                        <div class="verdict-card" id="executive-summary-panel">
+                            <div class="verdict-header">
+                                <div class="badge-verdict" id="summary-verdict">Evaluating</div>
+                                <h2 class="verdict-title">Executive Verdict</h2>
+                            </div>
+                            <p class="verdict-summary" id="summary-text">Trigger a new analysis or load a previous run to begin audit synthesis.</p>
+                            
+                            <div class="strengths-risks-box">
+                                <div class="verdict-list-sec">
+                                    <span class="list-sec-title">Core Strengths</span>
+                                    <ul class="verdict-list strengths" id="summary-strengths">
+                                        <!-- Injected -->
+                                    </ul>
+                                </div>
+                                <div class="verdict-list-sec">
+                                    <span class="list-sec-title">Key Risks & Mitigations</span>
+                                    <ul class="verdict-list risks" id="summary-risks">
+                                        <!-- Injected -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Score Radar & Target Market Sizes -->
+                        <div class="section-card">
+                            <h2 class="section-title">Strategic Metrics Radar</h2>
+                            <div class="chart-container" id="chart-radar-container">
+                                <!-- Radar Chart SVG -->
+                            </div>
+                        </div>
+
+                        <!-- 12-Month Simulation Growth Forecast -->
+                        <div class="section-card">
+                            <h2 class="section-title">12-Month User & Revenue Projection</h2>
+                            <div class="chart-container" id="chart-line-container">
+                                <!-- Line Chart SVG -->
+                            </div>
+                        </div>
+                        
+                        <!-- Competitor TAM SAM SOM Size comparisons -->
+                        <div class="section-card">
+                            <h2 class="section-title">Market Addressability Sizing</h2>
+                            <div class="chart-container" id="chart-bar-container">
+                                <!-- Bar Chart SVG -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Executive Summary McKinsey-style Page -->
+            <div class="view-content" id="view-executive-summary">
+                <div class="mck-report">
+                    <!-- Report Header -->
+                    <header class="mck-header">
+                        <div class="mck-header-eyebrow">MCKINSEY &amp; COMPANY — ENGAGEMENT BRIEFING</div>
+                        <h1 class="mck-report-title" id="mck-title">Executive Evaluation &amp; Strategic Audit</h1>
+                        <p class="mck-report-meta">
+                            <span>Client Partner: <strong id="mck-meta-startup">Solarex</strong></span>
+                            <span>Sector: <strong id="mck-meta-sector">CleanTech</strong></span>
+                            <span>Engagement Date: <strong id="mck-meta-date">June 2026</strong></span>
+                        </p>
+                    </header>
+
+                    <!-- McKinsey Signature Divider Line -->
+                    <div class="mck-divider"></div>
+
+                    <!-- Scores & Quick-Verdict Summary Row -->
+                    <div class="mck-score-row">
+                        <div class="mck-score-card">
+                            <span class="mck-score-num" id="mck-score-startup">—</span>
+                            <span class="mck-score-lbl">Startup Score</span>
+                            <span class="mck-score-desc">Product core & growth potential</span>
+                        </div>
+                        <div class="mck-score-card">
+                            <span class="mck-score-num" id="mck-score-invest">—</span>
+                            <span class="mck-score-lbl">Investment Score</span>
+                            <span class="mck-score-desc">VC alignment & readiness metrics</span>
+                        </div>
+                        <div class="mck-score-card">
+                            <span class="mck-score-num" id="mck-score-conf">—</span>
+                            <span class="mck-score-lbl">Confidence Score</span>
+                            <span class="mck-score-desc">Aggregate validation certainty</span>
+                        </div>
+                    </div>
+
+                    <!-- McKinsey Two-Column Strategic Layout -->
+                    <div class="mck-grid">
+                        
+                        <!-- Left Column: Opportunities, Risks, and roadmaps -->
+                        <div class="mck-col">
+                            
+                            <!-- Opportunities Card -->
+                            <div class="mck-card">
+                                <h3 class="mck-card-title">I. Core Opportunity & Market Space</h3>
+                                <div class="mck-card-highlight" id="mck-opp-title">High-Moat AI Energy Management Opportunities Identified</div>
+                                <p class="mck-card-text" id="mck-opp-text">Analyzing competitor structures and regulatory landscapes reveals a primary addressable market entry point.</p>
+                                <ul class="mck-card-list" id="mck-opp-list">
+                                    <!-- Injected -->
+                                </ul>
+                            </div>
+
+                            <!-- Risks & Mitigations Card -->
+                            <div class="mck-card">
+                                <h3 class="mck-card-title">II. Primary Risks & Strategic Mitigations</h3>
+                                <div class="mck-card-highlight danger" id="mck-risk-title">Critical Exposure: Utility Disruption & Distribution Moat</div>
+                                <p class="mck-card-text" id="mck-risk-text">Operational and compliance liabilities require aggressive mitigation gating to protect investment capital.</p>
+                                <ul class="mck-card-list risks" id="mck-risk-list">
+                                    <!-- Injected -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Investment Verdict & Recommended MVP -->
+                        <div class="mck-col">
+                            
+                            <!-- Investment Verdict Card -->
+                            <div class="mck-card accent">
+                                <h3 class="mck-card-title">III. Investment Recommendation & Financials</h3>
+                                <div class="mck-verdict-box">
+                                    <div class="mck-verdict-badge" id="mck-verdict-val">Conditional Invest</div>
+                                    <div class="mck-verdict-lbl">VC Engagement Stance</div>
+                                </div>
+                                <div class="mck-stats-grid">
+                                    <div class="mck-stat-item">
+                                        <span class="mck-stat-num" id="mck-expected-arr">$11.4M ARR</span>
+                                        <span class="mck-stat-lbl">Year 3 Expected Revenue</span>
+                                    </div>
+                                    <div class="mck-stat-item">
+                                        <span class="mck-stat-num" id="mck-payback-val">4.3 Months</span>
+                                        <span class="mck-stat-lbl">CAC Payback Runway</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Recommended MVP Card -->
+                            <div class="mck-card">
+                                <h3 class="mck-card-title">IV. Recommended MVP Specification</h3>
+                                <p class="mck-card-text">Proposed initial product configuration based on validation loop consensus:</p>
+                                <ul class="mck-card-list mvp" id="mck-mvp-list">
+                                    <!-- Injected -->
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- 90-Day Implementation Roadmap -->
+                    <div class="mck-card full-width">
+                        <h3 class="mck-card-title">V. 90-Day Go-To-Market & Product Roadmap</h3>
+                        <div class="mck-roadmap">
+                            <div class="mck-roadmap-step">
+                                <span class="mck-step-day">Days 1 - 30</span>
+                                <span class="mck-step-title">Core MVP & Feature Lock</span>
+                                <p class="mck-step-desc" id="mck-step1-desc">Finalize dashboard framework and lock down must-have features.</p>
+                            </div>
+                            <div class="mck-roadmap-step">
+                                <span class="mck-step-day">Days 31 - 60</span>
+                                <span class="mck-step-title">Integration & Model Verification</span>
+                                <p class="mck-step-desc" id="mck-step2-desc">Integrate AI Optimizer and establish API connection checks with data partners.</p>
+                            </div>
+                            <div class="mck-roadmap-step">
+                                <span class="mck-step-day">Days 61 - 90</span>
+                                <span class="mck-step-title">Launch, Pilot & Exclusivity Gates</span>
+                                <p class="mck-step-desc" id="mck-step3-desc">Roll out HOA administration portal pilot and secure local partner exclusivity agreements.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- One-page Founder Summary -->
+                    <div class="mck-paper-section">
+                        <h2 class="mck-paper-title">Executive Briefing & Strategic Sentiment</h2>
+                        <div class="mck-paper-content" id="mck-founder-summary">
+                            <!-- Injected McKinsey narrative -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- New Analysis Configuration View -->
+            <div class="view-content" id="view-new-analysis">
+                <div class="section-card max-width-large">
+                    <h2 class="section-title text-large">Configure Founder Evaluation</h2>
+                    <p class="section-subtitle">Define your startup parameters to spin up the multi-agent execution pipeline.</p>
+                    
+                    <form class="analysis-form" id="analysis-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="startup-name">Startup Name</label>
+                                <input type="text" id="startup-name" value="Solarex" required placeholder="e.g. Solarex">
+                            </div>
+                            <div class="form-group">
+                                <label for="startup-industry">Industry Segment</label>
+                                <input type="text" id="startup-industry" value="CleanTech" required placeholder="e.g. CleanTech, SaaS, BioTech">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="startup-description">Elevator Pitch & Description</label>
+                            <textarea id="startup-description" required rows="4" placeholder="Briefly describe the product core value proposition, key mechanics, and the problem it resolves.">An AI-powered platform for optimizing community solar energy sharing.</textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="startup-pricing">Pricing Structure / Revenue Model</label>
+                                <input type="text" id="startup-pricing" value="10% transaction fee" required placeholder="e.g. $29/mo SaaS subscription">
+                            </div>
+                            <div class="form-group">
+                                <label for="startup-customer">Ideal Target Customer Profile</label>
+                                <input type="text" id="startup-customer" value="Residential communities" required placeholder="e.g. Residential homeowners, SME retailers">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="startup-stage">Current Funding Stage</label>
+                                <select id="startup-stage">
+                                    <option value="Pre-seed">Pre-seed</option>
+                                    <option value="Seed" selected>Seed</option>
+                                    <option value="Series A">Series A</option>
+                                    <option value="Series B+">Series B+</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="analysis-mode">Evaluation Mode</label>
+                                <select id="analysis-mode">
+                                    <option value="mock" selected>Fast Mock Sandbox (Structural Check)</option>
+                                    <option value="real">Real LLM Run (Vertex AI / Gemini API)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large w-full justify-center">
+                                Launch Multi-Agent Workflow
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Workflow Visualization View -->
+            <div class="view-content" id="view-workflow">
+                <div class="wf-view-root">
+                    <!-- Header bar -->
+                    <div class="wf-header">
+                        <div class="wf-header-left">
+                            <h2 class="wf-title">Agent Workflow Graph</h2>
+                            <p class="wf-subtitle">Real-time multi-agent execution pipeline — n8n × LangGraph Studio</p>
+                        </div>
+                        <div class="wf-header-right">
+                            <div class="wf-legend">
+                                <span class="wf-legend-item"><span class="wf-legend-dot pending"></span>Pending</span>
+                                <span class="wf-legend-item"><span class="wf-legend-dot active"></span>Running</span>
+                                <span class="wf-legend-item"><span class="wf-legend-dot completed"></span>Completed</span>
+                                <span class="wf-legend-item"><span class="wf-legend-dot hitl"></span>HITL</span>
+                            </div>
+                            <div class="wf-stats" id="wf-global-stats">
+                                <span class="wf-stat-chip" id="wf-stat-elapsed">⏱ 0.0s</span>
+                                <span class="wf-stat-chip" id="wf-stat-done">✓ 0 / 13</span>
+                                <span class="wf-stat-chip" id="wf-stat-conf">◎ — %</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase Labels render inside SVG Canvas for perfect alignment -->
+
+                    <!-- Main SVG Canvas -->
+                    <div class="wf-canvas-wrapper">
+                        <div class="wf-grid-bg"></div>
+                        <svg id="wf-svg-canvas" class="wf-svg" preserveAspectRatio="xMidYMid meet">
+                            <defs>
+                                <!-- Arrow markers -->
+                                <marker id="arrow-pending" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                                    <polygon points="0 0, 8 3, 0 6" fill="rgba(255,255,255,0.12)"/>
+                                </marker>
+                                <marker id="arrow-active" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                                    <polygon points="0 0, 8 3, 0 6" fill="#6EE7FF"/>
+                                </marker>
+                                <marker id="arrow-completed" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                                    <polygon points="0 0, 8 3, 0 6" fill="#16C784"/>
+                                </marker>
+                                <!-- Glow filters -->
+                                <filter id="glow-active" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur stdDeviation="4" result="blur"/>
+                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                                <filter id="glow-completed" x="-30%" y="-30%" width="160%" height="160%">
+                                    <feGaussianBlur stdDeviation="2" result="blur"/>
+                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                                <!-- Gradient definitions -->
+                                <linearGradient id="edge-flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#6EE7FF" stop-opacity="0"/>
+                                    <stop offset="50%" stop-color="#6EE7FF" stop-opacity="0.9"/>
+                                    <stop offset="100%" stop-color="#6EE7FF" stop-opacity="0"/>
+                                </linearGradient>
+                                <linearGradient id="node-grad-active" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="rgba(110,231,255,0.18)"/>
+                                    <stop offset="100%" stop-color="rgba(110,231,255,0.06)"/>
+                                </linearGradient>
+                                <linearGradient id="node-grad-completed" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="rgba(22,199,132,0.18)"/>
+                                    <stop offset="100%" stop-color="rgba(22,199,132,0.06)"/>
+                                </linearGradient>
+                                <linearGradient id="node-grad-hitl" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="rgba(245,158,11,0.22)"/>
+                                    <stop offset="100%" stop-color="rgba(245,158,11,0.08)"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Edges group -->
+                            <g id="wf-edges-layer"></g>
+                            <!-- Nodes group -->
+                            <g id="wf-nodes-layer"></g>
+                        </svg>
+                    </div>
+
+                    <!-- Bottom Info Panel -->
+                    <div class="wf-info-panel" id="wf-node-detail-panel">
+                        <div class="wf-info-empty" id="wf-info-empty">Click any agent node to inspect details</div>
+                        <div class="wf-info-content" id="wf-info-content" style="display:none">
+                            <div class="wf-info-header">
+                                <div class="wf-info-icon" id="wf-detail-icon">R</div>
+                                <div>
+                                    <div class="wf-info-name" id="wf-detail-name">Research Agent</div>
+                                    <div class="wf-info-desc" id="wf-detail-desc">Market sizing and competitive landscape analysis.</div>
+                                </div>
+                                <div class="wf-info-badges">
+                                    <span class="wf-info-badge" id="wf-detail-status">PENDING</span>
+                                    <span class="wf-info-badge accent" id="wf-detail-time">0ms</span>
+                                    <span class="wf-info-badge success" id="wf-detail-conf">—%</span>
+                                </div>
+                            </div>
+                            <div class="wf-conf-bar-wrap">
+                                <span class="wf-conf-label">Confidence</span>
+                                <div class="wf-conf-track">
+                                    <div class="wf-conf-fill" id="wf-detail-conf-bar" style="width:0%"></div>
+                                </div>
+                                <span class="wf-conf-pct" id="wf-detail-conf-pct">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis History View -->
+            <div class="view-content" id="view-history">
+                <div class="section-card">
+                    <h2 class="section-title">Audit History & Database Index</h2>
+                    <p class="section-subtitle">Access details and full metrics from historical startup execution evaluations.</p>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Startup Name</th>
+                                    <th>Startup Score</th>
+                                    <th>Investment Readiness</th>
+                                    <th>Confidence</th>
+                                    <th>Recommendation</th>
+                                    <th>Timestamp</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body">
+                                <!-- Loaded dynamically via app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports and Presentations View -->
+            <div class="view-content" id="view-reports">
+                <div class="reports-layout">
+                    
+                    <div class="reports-sidebar">
+                        <h2 class="section-title">Deliverables Drawer</h2>
+                        <div class="reports-list" id="reports-file-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="reports-viewer">
+                        <div class="viewer-header">
+                            <h3 class="viewer-title" id="report-view-title">solarex_report.md</h3>
+                            <div class="viewer-actions">
+                                <button class="btn btn-secondary btn-small" id="btn-copy-md">Copy Markdown</button>
+                                <button class="btn btn-secondary btn-small" id="btn-view-deck">Presentation Slides</button>
+                            </div>
+                        </div>
+                        <div class="viewer-body" id="report-viewer-content">
+                            <!-- Report contents rendered here -->
+                            <div class="no-report-selected">
+                                <div class="no-report-selected-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                </div>
+                                <div class="no-report-selected-title">No Deliverable Selected</div>
+                                <div class="no-report-selected-desc">Select an analysis output from the Deliverables Drawer on the left to inspect formatted markdown and draft slides.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Executive Brief View (McKinsey-style consulting report) -->
+            <div class="view-content" id="view-executive-summary">
+                <div class="mck-report">
+                    <!-- Report Header -->
+                    <div class="mck-header">
+                        <div class="mck-header-left">
+                            <div class="mck-firm-badge">STARTUP COPILOT AI</div>
+                            <h1 class="mck-headline" id="mck-headline">Executive Investment Brief</h1>
+                            <p class="mck-subline" id="mck-subline">Prepared by AI-Powered Due Diligence Platform · Confidential</p>
+                        </div>
+                        <div class="mck-header-right">
+                            <div class="mck-date-block">
+                                <span class="mck-date-label">Report Date</span>
+                                <span class="mck-date-value" id="mck-date">—</span>
+                            </div>
+                            <div class="mck-verdict-pill" id="mck-verdict-pill">—</div>
+                        </div>
+                    </div>
+
+                    <!-- Top Scorecard Row -->
+                    <div class="mck-scorecard-row">
+                        <div class="mck-scorecard-item">
+                            <span class="mck-scorecard-num" id="mck-startup-score">—</span>
+                            <span class="mck-scorecard-label">Startup Score</span>
+                            <div class="mck-scorecard-bar"><div class="mck-scorecard-fill" id="mck-startup-bar"></div></div>
+                        </div>
+                        <div class="mck-scorecard-item">
+                            <span class="mck-scorecard-num accent" id="mck-invest-score">—</span>
+                            <span class="mck-scorecard-label">Investment Score</span>
+                            <div class="mck-scorecard-bar"><div class="mck-scorecard-fill accent" id="mck-invest-bar"></div></div>
+                        </div>
+                        <div class="mck-scorecard-item">
+                            <span class="mck-scorecard-num success" id="mck-confidence-score">—</span>
+                            <span class="mck-scorecard-label">AI Confidence</span>
+                            <div class="mck-scorecard-bar"><div class="mck-scorecard-fill success" id="mck-conf-bar"></div></div>
+                        </div>
+                        <div class="mck-scorecard-item wide">
+                            <span class="mck-scorecard-num warn" id="mck-revenue-est">—</span>
+                            <span class="mck-scorecard-label">Est. Yr-1 ARR</span>
+                            <span class="mck-scorecard-sub" id="mck-revenue-sub">Based on simulator projection</span>
+                        </div>
+                    </div>
+
+                    <!-- Two-column grid body -->
+                    <div class="mck-body-grid">
+
+                        <!-- LEFT COLUMN -->
+                        <div class="mck-col-left">
+
+                            <!-- Opportunity / Risk two-up cards -->
+                            <div class="mck-two-up">
+                                <div class="mck-insight-card opportunity">
+                                    <div class="mck-insight-header">
+                                        <span class="mck-insight-icon">↗</span>
+                                        <h3 class="mck-insight-title">Biggest Opportunity</h3>
+                                    </div>
+                                    <p class="mck-insight-text" id="mck-opportunity">Loading analysis…</p>
+                                </div>
+                                <div class="mck-insight-card risk">
+                                    <div class="mck-insight-header">
+                                        <span class="mck-insight-icon">⚠</span>
+                                        <h3 class="mck-insight-title">Primary Risk</h3>
+                                    </div>
+                                    <p class="mck-insight-text" id="mck-risk">Loading analysis…</p>
+                                </div>
+                            </div>
+
+                            <!-- Recommended MVP -->
+                            <div class="mck-section-card">
+                                <div class="mck-section-header">
+                                    <h3 class="mck-section-title">Recommended MVP</h3>
+                                    <span class="mck-section-badge">Product Agent</span>
+                                </div>
+                                <ul class="mck-feature-list" id="mck-mvp-features">
+                                    <li class="mck-feature-item mck-skeleton">Loading MVP features…</li>
+                                </ul>
+                            </div>
+
+                            <!-- Investor Recommendation -->
+                            <div class="mck-section-card">
+                                <div class="mck-section-header">
+                                    <h3 class="mck-section-title">Investor Recommendation</h3>
+                                    <span class="mck-section-badge">VC Partner Agent</span>
+                                </div>
+                                <p class="mck-body-text" id="mck-investor-rec">Loading investor verdict…</p>
+                                <div class="mck-strength-list" id="mck-strengths-list">
+                                    <!-- Strengths injected here -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- RIGHT COLUMN -->
+                        <div class="mck-col-right">
+
+                            <!-- 90-Day Roadmap -->
+                            <div class="mck-section-card">
+                                <div class="mck-section-header">
+                                    <h3 class="mck-section-title">90-Day Execution Roadmap</h3>
+                                    <span class="mck-section-badge">Growth Agent</span>
+                                </div>
+                                <div class="mck-roadmap" id="mck-roadmap">
+                                    <div class="mck-roadmap-phase">
+                                        <div class="mck-phase-header">
+                                            <div class="mck-phase-dot"></div>
+                                            <span class="mck-phase-label">Days 1–30 · Foundation</span>
+                                        </div>
+                                        <ul class="mck-phase-items" id="mck-phase-1"></ul>
+                                    </div>
+                                    <div class="mck-roadmap-phase">
+                                        <div class="mck-phase-header">
+                                            <div class="mck-phase-dot accent"></div>
+                                            <span class="mck-phase-label">Days 31–60 · Build</span>
+                                        </div>
+                                        <ul class="mck-phase-items" id="mck-phase-2"></ul>
+                                    </div>
+                                    <div class="mck-roadmap-phase">
+                                        <div class="mck-phase-header">
+                                            <div class="mck-phase-dot success"></div>
+                                            <span class="mck-phase-label">Days 61–90 · Launch</span>
+                                        </div>
+                                        <ul class="mck-phase-items" id="mck-phase-3"></ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- One-Page Founder Summary -->
+                            <div class="mck-section-card founder-brief">
+                                <div class="mck-section-header">
+                                    <h3 class="mck-section-title">One-Page Founder Summary</h3>
+                                    <span class="mck-section-badge">Executive Brief</span>
+                                </div>
+                                <p class="mck-brief-text" id="mck-founder-summary">Loading executive summary…</p>
+                                <div class="mck-brief-risks" id="mck-brief-risks">
+                                    <!-- Risk bullets injected here -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="mck-footer">
+                        <span>Startup Copilot AI · Multi-Agent Due Diligence Platform</span>
+                        <span>Confidential — For Founder &amp; Investor Review Only</span>
+                        <span id="mck-footer-run">Run ID: —</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Settings View -->
+            <div class="view-content" id="view-settings">
+                <div class="section-card max-width-medium">
+                    <h2 class="section-title">Orchestration & Env Settings</h2>
+                    
+                    <div class="settings-group">
+                        <h3>Model Parameters</h3>
+                        <div class="settings-row">
+                            <label>Default LLM Model</label>
+                            <span class="badge">gemini-2.5-flash</span>
+                        </div>
+                        <div class="settings-row">
+                            <label>Fallback Option</label>
+                            <span class="badge">gemini-2.5-pro</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>Orchestration Limits</h3>
+                        <div class="settings-row">
+                            <label>Maximum HITL Loops</label>
+                            <span class="badge">3 loops</span>
+                        </div>
+                        <div class="settings-row">
+                            <label>Confidence Threshold Warning</label>
+                            <span class="badge">60%</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>Storage Connections</h3>
+                        <div class="settings-row">
+                            <label>Database Engine</label>
+                            <span class="badge">SQLite (startup_copilot.db)</span>
+                        </div>
+                        <div class="settings-row">
+                            <label>Output Dir</label>
+                            <span class="badge">./outputs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Human-in-the-Loop Dialog / Revision Prompt Panel -->
+    <div class="overlay" id="hitl-overlay">
+        <div class="hitl-panel">
+            <div class="hitl-panel-header">
+                <span class="hitl-tag">Review Checkpoint Required</span>
+                <h2>Founder Interrupt Validation</h2>
+            </div>
+            
+            <div class="hitl-panel-body">
+                <p>The orchestrator halted the workflow at Gate 3. Review the current agent evaluations below and submit approval or revision routing requests.</p>
+                
+                <div class="hitl-data-summary" id="hitl-data-summary-box">
+                    <!-- Injected details of current state -->
+                </div>
+                
+                <div class="form-group margin-top-large">
+                    <label for="hitl-feedback-text">Founder Review Feedback & Directives</label>
+                    <textarea id="hitl-feedback-text" rows="4" placeholder="Enter comments or revision instructions for the agents.">Looks great! Proceed to growth and pitch deck phase.</textarea>
+                </div>
+            </div>
+            
+            <div class="hitl-panel-footer">
+                <button class="btn btn-danger" id="hitl-btn-major">Major Revision (to Research)</button>
+                <button class="btn btn-warning" id="hitl-btn-minor">Minor Revision (to Product)</button>
+                <button class="btn btn-success" id="hitl-btn-approve">Approve & Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pitch Deck Slide Presentation Mode Modal -->
+    <div class="modal" id="deck-modal">
+        <div class="modal-content deck-mode">
+            <header class="modal-header">
+                <h3>Pitch Deck Presentation Mode</h3>
+                <button class="modal-close" id="deck-modal-close">&times;</button>
+            </header>
+            <div class="modal-body">
+                <div class="slide-viewport">
+                    <div class="slide-card" id="pitch-deck-slide-card">
+                        <div class="slide-header">
+                            <span class="slide-number" id="slide-num">Slide 1 / 10</span>
+                            <h2 class="slide-title" id="slide-title">Problem Space</h2>
+                        </div>
+                        <ul class="slide-points" id="slide-points-list">
+                            <!-- Bullet points injected dynamically -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <footer class="modal-footer justify-between">
+                <button class="btn btn-secondary" id="deck-btn-prev">Previous Slide</button>
+                <div class="deck-dots" id="deck-dots-nav">
+                    <!-- Nav dots -->
+                </div>
+                <button class="btn btn-primary" id="deck-btn-next">Next Slide</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Toast Notification Banner -->
+    <div class="toast-container" id="toast-banner-container"></div>
+
+    <script src="/app.js"></script>
+</body>
+</html>

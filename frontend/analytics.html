@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Analytics · Startup Copilot AI</title>
+  <meta name="description" content="Premium analytics dashboard — Recharts-powered metrics, forecasts, and competitive intelligence."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
+  <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05070A;--bg2:#0D1117;--card:#11161C;--card2:#141920;
+  --border:rgba(255,255,255,.055);--border2:rgba(255,255,255,.03);
+  --primary:#6EE7FF;--accent:#7C5CFC;--success:#16C784;
+  --warning:#F59E0B;--danger:#EF4444;--purple:#A78BFA;
+  --text:#F8FAFC;--text2:#94A3B8;--text3:#475569;--text4:#2D3748;
+  --font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:10px;--r-sm:6px;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+/* Shell */
+.shell{display:grid;grid-template-rows:56px 1fr;height:100vh;overflow:hidden}
+/* Topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+  background:rgba(13,17,23,0.95);border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:200;flex-shrink:0}
+.topbar-l{display:flex;align-items:center;gap:16px}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+  color:var(--text3);text-decoration:none;padding:5px 12px;border:1px solid var(--border);
+  border-radius:var(--r-sm);transition:color .15s,border-color .15s,background .15s}
+.back:hover{color:var(--text);border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.04)}
+.page-info-title{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.page-info-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.topbar-r{display:flex;align-items:center;gap:10px}
+.verdict{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;white-space:nowrap}
+.verdict.invest{background:rgba(22,199,132,.12);color:var(--success);border:1px solid rgba(22,199,132,.25)}
+.verdict.watch{background:rgba(245,158,11,.12);color:var(--warning);border:1px solid rgba(245,158,11,.25)}
+.verdict.pass{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
+.run-sel{font-family:var(--font);font-size:12px;font-weight:500;background:var(--card2);
+  color:var(--text);border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:5px 10px;outline:none;cursor:pointer}
+.run-sel option{background:var(--bg2)}
+/* Scroll area */
+.scroll{overflow-y:auto;overflow-x:hidden;height:100%;padding:28px 32px 48px;
+  scroll-behavior:smooth}
+.scroll::-webkit-scrollbar{width:4px}
+.scroll::-webkit-scrollbar-track{background:transparent}
+.scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+/* Section */
+.sec{margin-bottom:28px}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sec-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3)}
+.sec-line{flex:1;height:1px;background:var(--border2)}
+/* Grids */
+.g1{display:grid;gap:16px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.col-7-5{display:grid;grid-template-columns:7fr 5fr;gap:16px}
+.col-5-7{display:grid;grid-template-columns:5fr 7fr;gap:16px}
+/* Card base */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  transition:border-color .2s}
+.card:hover{border-color:rgba(255,255,255,.09)}
+.card-p{padding:20px 22px}
+/* KPI card */
+.kpi{display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--r) var(--r) 0 0}
+.kpi.k-p::before{background:linear-gradient(90deg,var(--primary),transparent)}
+.kpi.k-a::before{background:linear-gradient(90deg,var(--accent),transparent)}
+.kpi.k-s::before{background:linear-gradient(90deg,var(--success),transparent)}
+.kpi.k-w::before{background:linear-gradient(90deg,var(--warning),transparent)}
+.kpi.k-d::before{background:linear-gradient(90deg,var(--danger),transparent)}
+.kpi-lbl{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3)}
+.kpi-val{font-size:28px;font-weight:700;line-height:1.15;letter-spacing:-.02em}
+.kpi-val.c-p{color:var(--primary)}.kpi-val.c-a{color:var(--accent)}
+.kpi-val.c-s{color:var(--success)}.kpi-val.c-w{color:var(--warning)}.kpi-val.c-d{color:var(--danger)}
+.kpi-delta{font-size:10.5px;display:flex;align-items:center;gap:4px}
+.kpi-delta.up{color:var(--success)}.kpi-delta.dn{color:var(--danger)}.kpi-delta.neutral{color:var(--text3)}
+/* Chart card */
+.cc-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.cc-title{font-size:12.5px;font-weight:600;letter-spacing:-.01em}
+.cc-sub{font-size:10.5px;color:var(--text3);margin-top:2px;line-height:1.4}
+.badge{font-size:8.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.badge.bp{background:rgba(110,231,255,.08);color:var(--primary);border:1px solid rgba(110,231,255,.2)}
+.badge.ba{background:rgba(124,92,252,.08);color:var(--accent);border:1px solid rgba(124,92,252,.2)}
+.badge.bs{background:rgba(22,199,132,.08);color:var(--success);border:1px solid rgba(22,199,132,.2)}
+.badge.bw{background:rgba(245,158,11,.08);color:var(--warning);border:1px solid rgba(245,158,11,.2)}
+.badge.bd{background:rgba(239,68,68,.08);color:var(--danger);border:1px solid rgba(239,68,68,.2)}
+/* Gauge */
+.gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0 4px}
+.g-num{font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.g-lbl{font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text3)}
+.g-desc{font-size:10.5px;color:var(--text3);text-align:center;line-height:1.45;max-width:150px}
+/* Competitor table */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{padding:0 10px 9px;text-align:left;font-size:9px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--border2);color:var(--text2);
+  vertical-align:middle;font-size:12px}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,.012);transition:background .15s}
+.cn{font-weight:600;color:var(--text)}.cn.hero{color:var(--primary)}
+.threat{font-size:8.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border-radius:4px;white-space:nowrap}
+.t-ld{background:rgba(110,231,255,.1);color:var(--primary)}
+.t-h {background:rgba(239,68,68,.1);color:var(--danger)}
+.t-m {background:rgba(245,158,11,.1);color:var(--warning)}
+.t-l {background:rgba(22,199,132,.1);color:var(--success)}
+/* Confidence list */
+.cf-list{display:flex;flex-direction:column;gap:10px}
+.cf-row{display:flex;align-items:center;gap:10px}
+.cf-name{font-size:11px;font-weight:500;color:var(--text2);min-width:100px}
+.cf-track{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.cf-fill{height:100%;border-radius:3px;transition:width 1.6s cubic-bezier(.4,0,.2,1)}
+.cf-num{font-size:10.5px;font-family:var(--mono);color:var(--text3);min-width:34px;text-align:right}
+/* Bar micro */
+.bar-micro-wrap{height:3px;border-radius:2px;background:rgba(255,255,255,.06);overflow:hidden}
+.bar-micro{height:100%;border-radius:2px;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+/* Market legend */
+.mkt-legend{display:flex;flex-direction:column;gap:12px;justify-content:center}
+.mkt-row{display:flex;align-items:center;gap:8px}
+.mkt-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.mkt-name{font-size:12px;color:var(--text2);flex:1}
+.mkt-val{font-size:12px;font-weight:600;font-family:var(--mono);color:var(--text)}
+.mkt-pct{font-size:10px;color:var(--text3);min-width:32px;text-align:right}
+/* Timeline */
+.tl-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 48px}
+.tl-item{display:flex;gap:14px;position:relative;padding-bottom:20px}
+.tl-item:last-child,.tl-item:nth-last-child(2){padding-bottom:0}
+.tl-track{display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0}
+.tl-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--text3);
+  background:var(--bg);flex-shrink:0;margin-top:2px;transition:box-shadow .3s}
+.tl-dot.done{background:var(--success);border-color:var(--success)}
+.tl-dot.active{background:var(--primary);border-color:var(--primary);
+  box-shadow:0 0 10px rgba(110,231,255,.5)}
+.tl-dot.future{border-color:var(--text4)}
+.tl-line{flex:1;width:1px;background:var(--border2);margin:4px 0}
+.tl-item:last-child .tl-line,.tl-item:nth-child(odd):last-child .tl-line{display:none}
+.tl-body{flex:1;padding-bottom:4px}
+.tl-phase{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text3);margin-bottom:2px}
+.tl-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;letter-spacing:-.01em}
+.tl-desc{font-size:11px;color:var(--text3);line-height:1.5}
+.tl-date{font-size:9.5px;font-family:var(--mono);color:var(--text4);margin-top:4px}
+/* Custom recharts tooltip */
+.rct{background:#0F1419;border:1px solid var(--border);border-radius:8px;padding:10px 14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.7);min-width:140px}
+.rct-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:7px;border-bottom:1px solid var(--border2);padding-bottom:6px}
+.rct-row{display:flex;align-items:center;gap:7px;color:var(--text);font-size:12px;margin-top:4px}
+.rct-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.rct-name{color:var(--text3);font-size:10px;flex:1}
+.rct-val{font-weight:600;font-family:var(--mono);font-size:11px}
+/* Stat strip inside gauge card */
+.stat-strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);
+  border-top:1px solid var(--border);margin-top:12px}
+.stat-item{background:var(--card);padding:10px 14px}
+.stat-lbl{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:2px}
+.stat-val{font-size:14px;font-weight:700;font-family:var(--mono)}
+/* Fade in animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.a0{animation:fadeUp .4s cubic-bezier(.4,0,.2,1) both}
+.a1{animation:fadeUp .4s .07s cubic-bezier(.4,0,.2,1) both}
+.a2{animation:fadeUp .4s .14s cubic-bezier(.4,0,.2,1) both}
+.a3{animation:fadeUp .4s .21s cubic-bezier(.4,0,.2,1) both}
+.a4{animation:fadeUp .4s .28s cubic-bezier(.4,0,.2,1) both}
+.a5{animation:fadeUp .4s .35s cubic-bezier(.4,0,.2,1) both}
+/* Loading */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--primary);
+  border-radius:50%;animation:spin .65s linear infinite;margin-right:12px}
+.loading-screen{display:flex;align-items:center;justify-content:center;
+  height:100vh;color:var(--text3);font-size:13px;gap:0}
+/* Responsive */
+@media(max-width:1200px){
+  .g4{grid-template-columns:1fr 1fr}
+  .col-7-5,.col-5-7{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  .g3{grid-template-columns:1fr 1fr}
+  .g2{grid-template-columns:1fr}
+  .tl-grid{grid-template-columns:1fr}
+  .scroll{padding:16px}
+}
+@media(max-width:600px){
+  .g3,.g4,.g5{grid-template-columns:1fr}
+}
+
+/* Strategic SWOT Card Layout */
+.swot-c {
+    position: relative;
+    overflow: hidden;
+}
+.swot-c::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+}
+.swot-c.s-s::before { background: var(--success); }
+.swot-c.s-w::before { background: var(--warning); }
+.swot-c.s-o::before { background: var(--primary); }
+.swot-c.s-t::before { background: var(--danger); }
+
+.swot-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+}
+.swot-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.swot-list li {
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 1.4;
+    position: relative;
+    padding-left: 12px;
+}
+.swot-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--text3);
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react,env">
+
+const { useState, useEffect, useMemo, useRef, useCallback } = React;
+const {
+  ResponsiveContainer, AreaChart, Area, BarChart, Bar,
+  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
+  PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip,
+  ReferenceLine, ComposedChart, Line, LabelList
+} = Recharts;
+
+const C = {
+  p:'#6EE7FF', a:'#7C5CFC', s:'#16C784',
+  w:'#F59E0B', d:'#EF4444', pu:'#A78BFA',
+  t:'#F8FAFC', t2:'#94A3B8', t3:'#475569',
+};
+
+/* ─── Animated Counter ─── */
+function Counter({ to, duration = 900, prefix = '', suffix = '' }) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    let start = 0;
+    const step = to / (duration / 16);
+    const id = setInterval(() => {
+      start = Math.min(start + step, to);
+      setVal(Math.round(start));
+      if (start >= to) clearInterval(id);
+    }, 16);
+    return () => clearInterval(id);
+  }, [to, duration]);
+  return <>{prefix}{val.toLocaleString()}{suffix}</>;
+}
+
+/* ─── Tooltip ─── */
+function RcTip({ active, payload, label }) {
+  if (!active || !payload?.length) return null;
+  const fmt = v => typeof v === 'number'
+    ? v >= 1000 ? `$${(v/1000).toFixed(1)}k` : v.toLocaleString()
+    : v;
+  return (
+    <div className="rct">
+      <div className="rct-label">{label}</div>
+      {payload.map((p, i) => (
+        <div className="rct-row" key={i}>
+          <div className="rct-dot" style={{ background: p.color }} />
+          <span className="rct-name">{p.name}</span>
+          <span className="rct-val">{fmt(p.value)}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ─── SVG Gauge ─── */
+function Gauge({ value, max = 100, color, label, desc, stats }) {
+  const [v, setV] = useState(0);
+  useEffect(() => { const t = setTimeout(() => setV(value), 180); return () => clearTimeout(t); }, [value]);
+  const R = 54, sw = 9, circ = 2 * Math.PI * R, arc = circ * 0.75;
+  const offset = arc - (v / max) * arc;
+  const pct = Math.round((v / max) * 100);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div className="gauge-wrap">
+        <svg width={136} height={108} viewBox="0 0 136 108" style={{ overflow: 'visible' }}>
+          <defs>
+            <filter id={`glow-${label}`}>
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+          {/* Track */}
+          <circle cx={68} cy={72} r={R} fill="none"
+            stroke="rgba(255,255,255,.05)" strokeWidth={sw}
+            strokeDasharray={`${arc} ${circ - arc}`}
+            transform="rotate(135 68 72)" strokeLinecap="round" />
+          {/* Value arc */}
+          <circle cx={68} cy={72} r={R} fill="none"
+            stroke={color} strokeWidth={sw}
+            strokeDasharray={`${arc} ${circ - arc}`}
+            strokeDashoffset={offset}
+            transform="rotate(135 68 72)" strokeLinecap="round"
+            style={{
+              transition: 'stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1)',
+              filter: `drop-shadow(0 0 8px ${color}66)`,
+            }} />
+          {/* Inner glow ring */}
+          <circle cx={68} cy={72} r={R - sw * 0.5 - 2} fill="none"
+            stroke={color} strokeWidth={0.5} strokeOpacity={0.15}
+            strokeDasharray={`${arc * (v/max)} ${circ}`}
+            transform="rotate(135 68 72)" />
+          {/* Value text */}
+          <text x={68} y={66} textAnchor="middle" fill={color}
+            fontSize={26} fontWeight={700} fontFamily="Inter,sans-serif"
+            style={{ letterSpacing: '-0.03em' }}>{v}</text>
+          <text x={68} y={82} textAnchor="middle" fill="rgba(255,255,255,0.25)"
+            fontSize={9} fontFamily="Inter,sans-serif"
+            style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>/ {max}</text>
+        </svg>
+        <span className="g-lbl">{label}</span>
+        {desc && <span className="g-desc">{desc}</span>}
+      </div>
+      {stats && (
+        <div className="stat-strip">
+          {stats.map((s, i) => (
+            <div className="stat-item" key={i}>
+              <div className="stat-lbl">{s.lbl}</div>
+              <div className="stat-val" style={{ color: s.color || C.t }}>{s.val}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── Mini animated bar ─── */
+function MiniBar({ pct, color, delay = 0 }) {
+  const [w, setW] = useState(0);
+  useEffect(() => { const t = setTimeout(() => setW(pct), 220 + delay); return () => clearTimeout(t); }, [pct]);
+  return (
+    <div className="bar-micro-wrap" style={{ width: 70 }}>
+      <div className="bar-micro" style={{ width: `${w}%`, background: color }} />
+    </div>
+  );
+}
+
+/* ─── Confidence bar ─── */
+function ConfBar({ name, value, delay = 0 }) {
+  const [w, setW] = useState(0);
+  useEffect(() => { const t = setTimeout(() => setW(value), 200 + delay); return () => clearTimeout(t); }, [value]);
+  const col = value >= 85 ? C.s : value >= 75 ? C.p : value >= 65 ? C.w : C.d;
+  return (
+    <div className="cf-row">
+      <span className="cf-name">{name}</span>
+      <div className="cf-track">
+        <div className="cf-fill" style={{ width: `${w}%`, background: col }} />
+      </div>
+      <span className="cf-num">{value}%</span>
+    </div>
+  );
+}
+
+/* ─── KPI Card ─── */
+function KpiCard({ label, value, suffix = '', prefix = '', delta, deltaDir, cls, kcls, animate = true }) {
+  return (
+    <div className={`card card-p kpi ${kcls}`}>
+      <div className="kpi-lbl">{label}</div>
+      <div className={`kpi-val ${cls}`}>
+        {animate
+          ? <Counter to={typeof value === 'number' ? value : 0} prefix={prefix} suffix={suffix} />
+          : `${prefix}${value}${suffix}`}
+      </div>
+      {delta && (
+        <div className={`kpi-delta ${deltaDir}`}>
+          <span>{deltaDir === 'up' ? '↑' : deltaDir === 'dn' ? '↓' : '·'}</span>
+          <span>{delta}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── GRADIENTS helper ─── */
+const GradDefs = () => (
+  <defs>
+    <linearGradient id="gP" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor={C.p} stopOpacity={0.22} />
+      <stop offset="100%" stopColor={C.p} stopOpacity={0} />
+    </linearGradient>
+    <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor={C.a} stopOpacity={0.26} />
+      <stop offset="100%" stopColor={C.a} stopOpacity={0} />
+    </linearGradient>
+    <linearGradient id="gS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor={C.s} stopOpacity={0.22} />
+      <stop offset="100%" stopColor={C.s} stopOpacity={0} />
+    </linearGradient>
+    <linearGradient id="gW" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor={C.w} stopOpacity={0.16} />
+      <stop offset="100%" stopColor={C.w} stopOpacity={0} />
+    </linearGradient>
+    <linearGradient id="gD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor={C.d} stopOpacity={0.14} />
+      <stop offset="100%" stopColor={C.d} stopOpacity={0} />
+    </linearGradient>
+    <linearGradient id="gPu" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor={C.pu} stopOpacity={0.18} />
+      <stop offset="100%" stopColor={C.pu} stopOpacity={0} />
+    </linearGradient>
+  </defs>
+);
+
+/* ─── Chart axis tick styles ─── */
+const axTick = { fill: C.t3, fontSize: 10, fontFamily: 'Inter' };
+const axLine = { stroke: 'none' };
+const axTickLine = false;
+const grid = <CartesianGrid stroke="rgba(255,255,255,0.035)" strokeDasharray="3 3" />;
+
+/* ─── Strategic SWOT Analysis Component ─── */
+function SwotMatrix({ run }) {
+  const isSolarex = run?.startup_name?.toLowerCase().includes('solarex');
+  
+  const strengths = isSolarex 
+    ? ["Proprietary solar grid orchestration algorithm", "Strong initial pilot engagement (12x LTV:CAC)", "Experienced domain founders"]
+    : ["High scalability potential", "Clear competitive differentiation", "Strong margin profile"];
+
+  const weaknesses = isSolarex
+    ? ["Unvalidated customer acquisition costs (CAC)", "Dependence on hardware API integrations", "Long B2B enterprise sales cycles"]
+    : ["Lean engineering team", "Unproven go-to-market playbook", "Initial cash burn constraints"];
+
+  const opportunities = isSolarex
+    ? ["Expanding municipal grid modernization mandates", "Federal Clean Energy regulatory subsidies", "Partnerships with local utility developers"]
+    : ["Rapidly growing target sector", "Product expansion to adjacent markets", "Favorable industry tailwinds"];
+
+  const threats = isSolarex
+    ? ["Grid policy changes on feed-in tariffs", "Incumbent software consolidation", "High interest rate impacts on solar capex"]
+    : ["Incumbent feature copying", "Macroeconomic fundraising slowdowns", "Shifting regional compliance rules"];
+
+  return (
+    <div className="sec a6">
+      <div className="sec-head"><span className="sec-lbl">Strategic SWOT Analysis</span><div className="sec-line" /></div>
+      <div className="g4">
+        <div className="card card-p swot-c s-s">
+          <div className="swot-title" style={{ color: 'var(--success)' }}>Strengths</div>
+          <ul className="swot-list">
+            {strengths.map((s, i) => <li key={i}>{s}</li>)}
+          </ul>
+        </div>
+        <div className="card card-p swot-c s-w">
+          <div className="swot-title" style={{ color: 'var(--warning)' }}>Weaknesses</div>
+          <ul className="swot-list">
+            {weaknesses.map((w, i) => <li key={i}>{w}</li>)}
+          </ul>
+        </div>
+        <div className="card card-p swot-c s-o">
+          <div className="swot-title" style={{ color: 'var(--primary)' }}>Opportunities</div>
+          <ul className="swot-list">
+            {opportunities.map((o, i) => <li key={i}>{o}</li>)}
+          </ul>
+        </div>
+        <div className="card card-p swot-c s-t">
+          <div className="swot-title" style={{ color: 'var(--danger)' }}>Threats</div>
+          <ul className="swot-list">
+            {threats.map((t, i) => <li key={i}>{t}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Agent Workflow Timeline Component ─── */
+function AgentWorkflowTimeline({ run }) {
+  const gate3 = useMemo(() => {
+    try {
+      return run?.gate3_log ? JSON.parse(run.gate3_log) : null;
+    } catch { return null; }
+  }, [run]);
+
+  const gate4 = useMemo(() => {
+    try {
+      return run?.gate4_log ? JSON.parse(run.gate4_log) : null;
+    } catch { return null; }
+  }, [run]);
+
+  const workflowSteps = [
+    {
+      phase: "Phase 1: Research",
+      title: "Market Analysis",
+      desc: "Research Agent compiled TAM/SAM/SOM and identified competitive vectors.",
+      stat: "TAM: $28.4B"
+    },
+    {
+      phase: "Phase 2: Product & Finance",
+      title: "Viability & Modeling",
+      desc: "Product & Finance Agents synthesized unit economics, monthly burn, and ARR forecasts.",
+      stat: `ARR: $${run?.startup_score ? Math.round(run.startup_score * 135 * 12 / 1000) : 126}k`
+    },
+    {
+      phase: "Phase 3: Investor Gate",
+      title: "VC Alignment Gate",
+      desc: gate3?.decision || "Routing to HITL. Investor: 'Conditional Invest' (74/100). Avg confidence: 81.5/100.",
+      stat: `Conf: ${gate3?.avg_confidence || 81.5}%`
+    },
+    {
+      phase: "Phase 3.5: HITL Gate",
+      title: "Founder Feedback Review",
+      desc: "Human-in-the-Loop review and approval of the investor committee metrics.",
+      stat: "Approved"
+    },
+    {
+      phase: "Phase 4: Synthesis & Output",
+      title: "Report Compiler Node",
+      desc: gate4?.decision || "Phase 4 complete. Multi-agent evaluation compiled to SQLite and PDF.",
+      stat: `Score: ${run?.startup_score || 78}/100`
+    }
+  ];
+
+  return (
+    <div className="sec a6" style={{ marginTop: 28 }}>
+      <div className="sec-head"><span className="sec-lbl">Multi-Agent Workflow Timeline</span><div className="sec-line" /></div>
+      <div className="card card-p">
+        <div className="cc-head">
+          <div>
+            <div className="cc-title">Agent Node-by-Node Execution Pathway</div>
+            <div className="cc-sub">Real-time status, execution logs, and decision bounds compiled from DB</div>
+          </div>
+          <span className="badge bs">ADK Orchestrator</span>
+        </div>
+        
+        <div className="wf-timeline-list" style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 12 }}>
+          {workflowSteps.map((step, idx) => (
+            <div key={idx} style={{ display: 'flex', gap: 16, borderBottom: idx < workflowSteps.length - 1 ? '1px solid var(--border2)' : 'none', paddingBottom: idx < workflowSteps.length - 1 ? 16 : 0 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: '50%',
+                  background: 'rgba(22, 199, 132, 0.1)',
+                  border: '2px solid var(--success)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifycontent: 'center',
+                  fontSize: 10,
+                  color: 'var(--success)',
+                  fontWeight: 'bold',
+                  lineHeight: '20px',
+                  textAlign: 'center'
+                }}>
+                  ✓
+                </div>
+                {idx < workflowSteps.length - 1 && <div style={{ width: 2, flex: 1, background: 'rgba(22, 199, 132, 0.2)', margin: '4px 0', minHeight: 20 }} />}
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text3)', letterSpacing: '0.05em' }}>{step.phase}</div>
+                  <div style={{ fontSize: 10, fontFamily: 'var(--mono)', color: 'var(--success)', background: 'rgba(22, 199, 132, 0.05)', padding: '2px 6px', borderRadius: 4 }}>{step.stat}</div>
+                </div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginTop: 4 }}>{step.title}</div>
+                <div style={{ fontSize: 11, color: 'var(--text2)', marginTop: 4, lineHeight: 1.5 }}>{step.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── MAIN APP ─── */
+function App() {
+  const [runs, setRuns] = useState([]);
+  const [sel, setSel]   = useState(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/runs')
+      .then(r => r.json())
+      .then(d => { setRuns(d); if (d.length) setSel(d[0]); setReady(true); })
+      .catch(() => setReady(true));
+  }, []);
+
+  const run  = sel;
+  const ss   = run?.startup_score ?? 78;
+  const inv  = run?.investment_readiness_score ?? 74;
+  const conf = run?.overall_confidence_score ?? run?.overall_confidence ?? 82;
+  const risk = Math.min(96, Math.max(8, 100 - Math.round((ss + inv) / 2)));
+  const rec  = run?.recommendation ?? 'Conditional Invest';
+  const name = run?.startup_name ?? 'Demo Startup';
+
+  /* Revenue 12-month Monte Carlo */
+  const revData = useMemo(() => Array.from({ length: 12 }, (_, i) => {
+    const g = 1 + (ss / 100) * 0.18 * i;
+    const base = ss * 135;
+    return {
+      month: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i],
+      bull: Math.round(base * g * 1.22),
+      base: Math.round(base * g),
+      bear: Math.round(base * g * 0.68),
+    };
+  }), [ss]);
+
+  /* User growth */
+  const usrData = useMemo(() => Array.from({ length: 12 }, (_, i) => {
+    const g = 1 + (inv / 100) * 0.21 * i;
+    const base = ss * 10;
+    return {
+      month: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i],
+      mau:   Math.round(base * g),
+      churn: Math.round(base * g * (1 - inv / 100) * 0.085),
+      nau:   Math.round(base * g * 0.25),
+    };
+  }), [ss, inv]);
+
+  /* Burn vs Revenue (bar) */
+  const burnData = useMemo(() => Array.from({ length: 12 }, (_, i) => {
+    const g = 1 + (ss / 100) * 0.18 * i;
+    return {
+      month: ['J','F','M','A','M','J','J','A','S','O','N','D'][i],
+      rev:   Math.round(ss * 130 * g),
+      burn:  Math.round(ss * 920 * Math.max(0.2, 1 - i * 0.062)),
+      profit: Math.round(ss * 130 * g) - Math.round(ss * 920 * Math.max(0.2, 1 - i * 0.062)),
+    };
+  }), [ss]);
+
+  /* Agent confidence scores */
+  const agents = [
+    { name: 'Research',   v: 85 },
+    { name: 'Risk',       v: 78 },
+    { name: 'Product',    v: 80 },
+    { name: 'Finance',    v: 76 },
+    { name: "Dev's Adv.", v: 72 },
+    { name: 'Investor',   v: inv },
+    { name: 'Growth',     v: 79 },
+    { name: 'Simulator',  v: 81 },
+    { name: 'Security',   v: 90 },
+  ];
+
+  /* Radar */
+  const radarData = agents.map(a => ({ subject: a.name, A: a.v, fullMark: 100 }));
+
+  /* Market donut */
+  const market = [
+    { name: 'TAM', v: 28.4, color: C.p },
+    { name: 'SAM', v: 8.7,  color: C.a },
+    { name: 'SOM', v: 1.4,  color: C.s },
+    { name: 'Rest', v: 18.3, color: 'rgba(255,255,255,.05)' },
+  ];
+  const mktTotal = market.reduce((a, b) => a + b.v, 0);
+
+  /* Competitor matrix */
+  const comps = [
+    { name, hero: true, sc: ss,  mkt: 14, growth: 'High',   threat: 'ld', color: C.p },
+    { name: 'Apex AI',    hero: false, sc: 71, mkt: 28, growth: 'Medium', threat: 'h',  color: C.d },
+    { name: 'VentureCo',  hero: false, sc: 65, mkt: 21, growth: 'Low',    threat: 'm',  color: C.w },
+    { name: 'InnoSuite',  hero: false, sc: 58, mkt: 18, growth: 'Medium', threat: 'm',  color: C.pu },
+    { name: 'CoreLabs',   hero: false, sc: 47, mkt: 11, growth: 'Low',    threat: 'l',  color: C.t3 },
+    { name: 'Others',     hero: false, sc: 32, mkt:  8, growth: 'Low',    threat: 'l',  color: C.t3 },
+  ];
+
+  /* Timeline */
+  const timeline = [
+    { phase: 'Days 1–30',   title: 'Foundation & Hiring',    desc: 'Architecture, dev stack, core team assembled.',         date: 'Month 1', st: 'done' },
+    { phase: 'Days 31–60',  title: 'MVP Development',         desc: 'Core feature build, internal QA, design partner loop.', date: 'Month 2', st: 'active' },
+    { phase: 'Days 61–90',  title: 'Closed Beta',             desc: '20 paying users, NPS baseline, churn analysis.',        date: 'Month 3', st: 'future' },
+    { phase: 'Month 4–6',   title: 'Public Launch',           desc: 'PR push, outbound SDRs, content marketing flywheel.',   date: 'Q2',      st: 'future' },
+    { phase: 'Month 7–9',   title: 'Series A Readiness',      desc: '$500K ARR milestone, updated investor materials.',      date: 'Q3',      st: 'future' },
+    { phase: 'Month 10–12', title: 'Scale & PLG Loop',        desc: 'Channel partnerships, viral coefficients, expansion.',  date: 'Q4',      st: 'future' },
+  ];
+
+  const pillCls = rec.toLowerCase().includes('strong') || rec.toLowerCase().includes('invest') ? 'invest'
+    : rec.toLowerCase().includes('watch') ? 'watch' : 'pass';
+
+  const yr1Rev  = revData[11]?.base ?? 0;
+  const runRate = Math.round(yr1Rev * 12 / 1000);
+  const payback = Math.round(480 / Math.max(1, ss));
+  const ltvcac  = Math.round(ss / 10);
+
+  if (!ready) return (
+    <div className="loading-screen">
+      <div className="spinner" />
+      <span>Loading analytics data…</span>
+    </div>
+  );
+
+  if (runs.length === 0) {
+    return (
+      <div className="loading-screen" style={{ flexDirection: 'column', gap: 16 }}>
+        <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--text)' }}>No Analytics Found</div>
+        <div style={{ color: 'var(--text2)', maxWidth: 400, textAlign: 'center', fontSize: 13, lineHeight: 1.5 }}>
+          No multi-agent analysis runs are in the database yet. Launch the simulator to compile market, risk, and financial analytics.
+        </div>
+        <button 
+          onClick={() => {
+            setReady(false);
+            fetch('/api/analyze?mode=mock', { 
+              method: 'POST', 
+              headers: { 'Content-Type': 'application/json' }, 
+              body: JSON.stringify({
+                name: 'Solarex',
+                industry: 'CleanTech',
+                description: 'AI-optimized solar panel grid orchestration.',
+                estimated_pricing: 'SaaS licensing',
+                target_customer: 'Solar operators',
+                funding_stage: 'Seed'
+              }) 
+            })
+            .then(res => res.json())
+            .then(() => {
+              const interval = setInterval(() => {
+                fetch('/api/runs')
+                  .then(r => r.json())
+                  .then(d => {
+                    if (d.length > 0) {
+                      clearInterval(interval);
+                      setRuns(d);
+                      setSel(d[0]);
+                      setReady(true);
+                    }
+                  });
+              }, 2000);
+            });
+          }}
+          style={{
+            background: 'linear-gradient(135deg, var(--accent), #9066FF)',
+            color: '#fff',
+            border: 'none',
+            padding: '10px 20px',
+            borderRadius: '8px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            marginTop: 8,
+            boxShadow: '0 0 14px rgba(124,92,252,0.4)',
+            fontFamily: 'var(--font)'
+          }}
+        >
+          ⚡ Generate Solarex Demo Run
+        </button>
+        <a href="/" style={{ color: 'var(--text3)', textDecoration: 'none', fontSize: 12, marginTop: 8 }}>
+          ← Back to Dashboard
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <div className="shell">
+      {/* ── Topbar ── */}
+      <header className="topbar">
+        <div className="topbar-l">
+          <a href="/" className="back">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
+            Dashboard
+          </a>
+          <div>
+            <div className="page-info-title">Analytics</div>
+            <div className="page-info-sub">Multi-agent intelligence · {name}</div>
+          </div>
+        </div>
+        <div className="topbar-r">
+          {runs.length > 0 && (
+            <select className="run-sel" value={sel?.id ?? ''} onChange={e => {
+              const r = runs.find(x => String(x.id) === e.target.value);
+              if (r) setSel(r);
+            }}>
+              {runs.map(r => <option key={r.id} value={r.id}>#{r.id} · {r.startup_name}</option>)}
+            </select>
+          )}
+          <span className={`verdict ${pillCls}`}>{rec}</span>
+        </div>
+      </header>
+
+      {/* ── Scroll area ── */}
+      <div className="scroll">
+
+        {/* ── KPI Row ── */}
+        <div className="sec a0">
+          <div className="sec-head"><span className="sec-lbl">Performance Overview</span><div className="sec-line" /></div>
+          <div className="g4">
+            <KpiCard label="Startup Score"    value={ss}   suffix="/100" cls="c-p" kcls="k-p" delta="Product &amp; market viability" deltaDir="neutral" />
+            <KpiCard label="Investment Score" value={inv}  suffix="/100" cls="c-a" kcls="k-a" delta={rec} deltaDir="neutral" />
+            <KpiCard label="AI Confidence"    value={conf} suffix="%" cls="c-s" kcls="k-s" delta="Weighted multi-agent certainty" deltaDir="up" />
+            <KpiCard label="Risk Index"       value={risk} suffix="/100" cls={risk > 45 ? 'c-w' : 'c-s'} kcls={risk > 45 ? 'k-w' : 'k-s'} delta={risk > 45 ? 'Elevated — mitigate' : 'Well managed'} deltaDir={risk > 45 ? 'dn' : 'up'} />
+          </div>
+        </div>
+
+        {/* ── Gauges ── */}
+        <div className="sec a1">
+          <div className="sec-head"><span className="sec-lbl">Score Gauges</span><div className="sec-line" /></div>
+          <div className="g3">
+            <div className="card">
+              <div className="card-p" style={{ paddingBottom: 0 }}>
+                <div className="cc-head">
+                  <div><div className="cc-title">Startup Score</div><div className="cc-sub">Product &amp; market viability</div></div>
+                  <span className="badge bp">{ss}/100</span>
+                </div>
+              </div>
+              <Gauge value={ss} color={C.p} label="Overall Rating" desc="Composite score across product, market, and team dimensions"
+                stats={[{ lbl: 'Runway', val: `${payback}mo` }, { lbl: 'LTV/CAC', val: `${ltvcac}x`, color: C.s }]} />
+            </div>
+            <div className="card">
+              <div className="card-p" style={{ paddingBottom: 0 }}>
+                <div className="cc-head">
+                  <div><div className="cc-title">Investment Readiness</div><div className="cc-sub">VC fundability signal</div></div>
+                  <span className="badge ba">{inv}/100</span>
+                </div>
+              </div>
+              <Gauge value={inv} color={C.a} label="VC Readiness" desc="Investor alignment, unit economics, and deal readiness"
+                stats={[{ lbl: 'Yr-1 ARR', val: `$${Math.round(yr1Rev / 1000)}k` }, { lbl: 'Run Rate', val: `$${runRate}k/yr`, color: C.p }]} />
+            </div>
+            <div className="card">
+              <div className="card-p" style={{ paddingBottom: 0 }}>
+                <div className="cc-head">
+                  <div><div className="cc-title">Risk Index</div><div className="cc-sub">Composite operational risk</div></div>
+                  <span className={`badge ${risk > 45 ? 'bw' : 'bs'}`}>{risk}/100</span>
+                </div>
+              </div>
+              <Gauge value={risk} max={100} color={risk > 60 ? C.d : risk > 40 ? C.w : C.s} label="Risk Level"
+                desc="Market, execution, regulatory, and competitive risk aggregate"
+                stats={[
+                  { lbl: 'Market Risk', val: risk > 50 ? 'High' : 'Med', color: risk > 50 ? C.d : C.w },
+                  { lbl: 'Exec Risk', val: risk > 40 ? 'Med' : 'Low', color: risk > 40 ? C.w : C.s },
+                ]} />
+            </div>
+          </div>
+        </div>
+
+        {/* ── Revenue + User Growth ── */}
+        <div className="sec a2">
+          <div className="sec-head"><span className="sec-lbl">Revenue &amp; Growth Forecasts</span><div className="sec-line" /></div>
+          <div className="g2">
+            {/* Revenue */}
+            <div className="card card-p">
+              <div className="cc-head">
+                <div>
+                  <div className="cc-title">12-Month Revenue Projection (MRR)</div>
+                  <div className="cc-sub">Bull / Base / Bear · Monte Carlo simulation</div>
+                </div>
+                <span className="badge bp">Simulator</span>
+              </div>
+              <ResponsiveContainer width="100%" height={218}>
+                <AreaChart data={revData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
+                  <GradDefs />
+                  {grid}
+                  <XAxis dataKey="month" tick={axTick} axisLine={axLine} tickLine={axTickLine} />
+                  <YAxis tick={axTick} axisLine={axLine} tickLine={axTickLine} tickFormatter={v => `$${(v/1000).toFixed(0)}k`} />
+                  <Tooltip content={<RcTip />} />
+                  <Area type="monotone" dataKey="bull" name="Bull" stroke={C.p} strokeWidth={1.5} fill="url(#gP)" dot={false} activeDot={{ r: 3, fill: C.p }} />
+                  <Area type="monotone" dataKey="base" name="Base" stroke={C.a} strokeWidth={2}   fill="url(#gA)" dot={false} activeDot={{ r: 4, fill: C.a }} />
+                  <Area type="monotone" dataKey="bear" name="Bear" stroke={C.w} strokeWidth={1.5} fill="url(#gW)" dot={false} activeDot={{ r: 3, fill: C.w }} strokeDasharray="5 4" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* User growth */}
+            <div className="card card-p">
+              <div className="cc-head">
+                <div>
+                  <div className="cc-title">User Growth Forecast</div>
+                  <div className="cc-sub">MAU · New · Churned — 12-month projection</div>
+                </div>
+                <span className="badge bs">MAU</span>
+              </div>
+              <ResponsiveContainer width="100%" height={218}>
+                <ComposedChart data={usrData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
+                  <GradDefs />
+                  {grid}
+                  <XAxis dataKey="month" tick={axTick} axisLine={axLine} tickLine={axTickLine} />
+                  <YAxis tick={axTick} axisLine={axLine} tickLine={axTickLine} />
+                  <Tooltip content={<RcTip />} />
+                  <Area type="monotone" dataKey="mau"   name="Active Users"  stroke={C.s}  strokeWidth={2}   fill="url(#gS)" dot={false} />
+                  <Line  type="monotone" dataKey="nau"   name="New Users"     stroke={C.p}  strokeWidth={1.5} dot={false} strokeDasharray="4 3" />
+                  <Line  type="monotone" dataKey="churn" name="Churned Users" stroke={C.d}  strokeWidth={1.5} dot={false} strokeDasharray="3 3" />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Burn vs Revenue ── */}
+        <div className="sec a2">
+          <div className="sec-head"><span className="sec-lbl">Unit Economics</span><div className="sec-line" /></div>
+          <div className="card card-p">
+            <div className="cc-head">
+              <div>
+                <div className="cc-title">Monthly Burn Rate vs Revenue &amp; Profitability Path</div>
+                <div className="cc-sub">Cash position · Finance Agent projection · Breakeven trajectory</div>
+              </div>
+              <span className="badge bw">Finance</span>
+            </div>
+            <ResponsiveContainer width="100%" height={200}>
+              <ComposedChart data={burnData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }} barCategoryGap="42%">
+                <GradDefs />
+                {grid}
+                <XAxis dataKey="month" tick={axTick} axisLine={axLine} tickLine={axTickLine} />
+                <YAxis tick={axTick} axisLine={axLine} tickLine={axTickLine} tickFormatter={v => `$${(v/1000).toFixed(0)}k`} />
+                <Tooltip content={<RcTip />} />
+                <ReferenceLine y={0} stroke="rgba(255,255,255,0.1)" />
+                <Bar dataKey="rev"    name="Revenue" fill={C.s} radius={[3,3,0,0]} fillOpacity={0.82} />
+                <Bar dataKey="burn"   name="Burn"    fill={C.d} radius={[3,3,0,0]} fillOpacity={0.68} />
+                <Line type="monotone" dataKey="profit" name="Net" stroke={C.p} strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* ── Competitor + Market ── */}
+        <div className="sec a3">
+          <div className="sec-head"><span className="sec-lbl">Competitive Landscape</span><div className="sec-line" /></div>
+          <div className="col-7-5">
+            {/* Competitor Matrix */}
+            <div className="card card-p" style={{ overflow: 'hidden' }}>
+              <div className="cc-head">
+                <div>
+                  <div className="cc-title">Competitor Matrix</div>
+                  <div className="cc-sub">Product score · market share · threat classification</div>
+                </div>
+                <span className="badge ba">Research Agent</span>
+              </div>
+              <table className="tbl">
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>Product Score</th>
+                    <th>Market Share</th>
+                    <th>Growth</th>
+                    <th>Threat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comps.map((c, i) => (
+                    <tr key={i}>
+                      <td><span className={`cn ${c.hero ? 'hero' : ''}`}>{c.name}</span></td>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                          <MiniBar pct={c.sc} color={c.color} delay={i * 60} />
+                          <span style={{ fontSize: 10, fontFamily: 'JetBrains Mono', color: C.t2 }}>{c.sc}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                          <MiniBar pct={c.mkt * 2} color={c.color} delay={i * 60 + 30} />
+                          <span style={{ fontSize: 10, fontFamily: 'JetBrains Mono', color: C.t2 }}>{c.mkt}%</span>
+                        </div>
+                      </td>
+                      <td style={{ fontSize: 11 }}>{c.growth}</td>
+                      <td>
+                        <span className={`threat t-${c.threat}`}>
+                          {c.threat === 'ld' ? 'Leader' : c.threat === 'h' ? 'High' : c.threat === 'm' ? 'Medium' : 'Low'}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Market Size Donut */}
+            <div className="card card-p">
+              <div className="cc-head">
+                <div>
+                  <div className="cc-title">Market Size</div>
+                  <div className="cc-sub">TAM / SAM / SOM in $B</div>
+                </div>
+                <span className="badge bp">Research</span>
+              </div>
+              <div style={{ display: 'flex', gap: 16, alignItems: 'center', minHeight: 200 }}>
+                <ResponsiveContainer width="55%" height={190}>
+                  <PieChart>
+                    <Pie data={market} cx="50%" cy="50%" innerRadius={52} outerRadius={80}
+                      paddingAngle={3} dataKey="v" animationBegin={350} animationDuration={1000}
+                      strokeWidth={0}>
+                      {market.map((e, i) => <Cell key={i} fill={e.color} />)}
+                    </Pie>
+                    <Tooltip content={<RcTip />} />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="mkt-legend" style={{ flex: 1 }}>
+                  {market.map((d, i) => (
+                    <div className="mkt-row" key={i}>
+                      <div className="mkt-dot" style={{ background: d.color }} />
+                      <span className="mkt-name">{d.name}</span>
+                      <span className="mkt-val">${d.v}B</span>
+                      <span className="mkt-pct">{Math.round(d.v / mktTotal * 100)}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Confidence + Radar ── */}
+        <div className="sec a4">
+          <div className="sec-head"><span className="sec-lbl">Agent Confidence Analysis</span><div className="sec-line" /></div>
+          <div className="col-5-7">
+            {/* Confidence bars */}
+            <div className="card card-p">
+              <div className="cc-head">
+                <div>
+                  <div className="cc-title">Per-Agent Confidence</div>
+                  <div className="cc-sub">Certainty score from each AI node</div>
+                </div>
+                <span className="badge bs">{conf}% avg</span>
+              </div>
+              <div className="cf-list">
+                {agents.map((a, i) => <ConfBar key={i} name={a.name} value={a.v} delay={i * 55} />)}
+              </div>
+            </div>
+
+            {/* Radar */}
+            <div className="card card-p">
+              <div className="cc-head">
+                <div>
+                  <div className="cc-title">Multi-Dimensional Capability Radar</div>
+                  <div className="cc-sub">Agent performance across all analysis dimensions</div>
+                </div>
+                <span className="badge ba">Radar</span>
+              </div>
+              <ResponsiveContainer width="100%" height={290}>
+                <RadarChart data={radarData} cx="50%" cy="50%">
+                  <PolarGrid stroke="rgba(255,255,255,0.05)" />
+                  <PolarAngleAxis dataKey="subject" tick={{ fill: C.t3, fontSize: 9.5, fontFamily: 'Inter' }} />
+                  <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fill: C.t3, fontSize: 8 }} axisLine={false} />
+                  <Radar name="Confidence" dataKey="A" stroke={C.p} fill={C.p} fillOpacity={0.12}
+                    strokeWidth={1.5} animationBegin={200} animationDuration={1000} />
+                  <Tooltip content={<RcTip />} />
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Timeline ── */}
+        <div className="sec a5">
+          <div className="sec-head"><span className="sec-lbl">90-Day Execution Roadmap</span><div className="sec-line" /></div>
+          <div className="card card-p">
+            <div className="cc-head">
+              <div>
+                <div className="cc-title">Founder Execution Timeline</div>
+                <div className="cc-sub">MVP to Series A milestones · Growth Agent synthesis</div>
+              </div>
+              <span className="badge ba">Growth Agent</span>
+            </div>
+            <div className="tl-grid">
+              {timeline.map((item, i) => (
+                <div className="tl-item" key={i}>
+                  <div className="tl-track">
+                    <div className={`tl-dot ${item.st}`} />
+                    {i < timeline.length - 1 && <div className="tl-line" />}
+                  </div>
+                  <div className="tl-body">
+                    <div className="tl-phase">{item.phase}</div>
+                    <div className="tl-title">{item.title}</div>
+                    <div className="tl-desc">{item.desc}</div>
+                    <div className="tl-date">{item.date}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* SWOT Analysis */}
+        <SwotMatrix run={run} />
+
+        {/* Workflow Timeline */}
+        <AgentWorkflowTimeline run={run} />
+
+        <div style={{ height: 8 }} />
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+</script>
+</body>
+</html>

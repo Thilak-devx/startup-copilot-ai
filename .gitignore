@@ -1,0 +1,92 @@
+.env
+.env.local
+.env.production
+.env.dev
+.env.test
+
+credentials.json
+service-account.json
+google_credentials.json
+
+client_secret.json
+
+token.json
+
+secret.json
+
+apikey.txt
+
+*.pem
+*.key
+*.crt
+
+startup_copilot.db
+
+outputs/
+
+__pycache__/
+
+.pytest_cache/
+
+.mypy_cache/
+
+.ruff_cache/
+
+.venv/
+
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Testing
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
+
+# Type Checking
+.mypy_cache/
+.pyre/
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Build
+build/
+dist/
+
+# Node
+node_modules/
+
+# Database
+*.db-journal
+*.sqlite-journal
+
+# Outputs
+outputs/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db

@@ -1,0 +1,194 @@
+{
+  "eval_cases": [
+    {
+      "eval_case_id": "solarex",
+      "startup_name": "Solarex",
+      "domain": "CleanTech",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"Solarex\", \"description\": \"An AI-powered platform for optimizing community solar energy sharing among residential HOAs.\", \"industry\": \"CleanTech\", \"target_customer\": \"HOA residential communities\", \"estimated_pricing\": \"10% transaction fee\", \"funding_stage\": \"Seed\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Conditional Invest", "Strong Invest"],
+      "ground_truth": {
+        "min_startup_score": 65,
+        "min_investment_score": 60,
+        "min_confidence": 70,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    },
+    {
+      "eval_case_id": "medichain",
+      "startup_name": "MediChain",
+      "domain": "HealthTech",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"MediChain\", \"description\": \"A blockchain-based platform for secure patient medical record sharing across healthcare providers, enabling AI-driven diagnostics.\", \"industry\": \"HealthTech\", \"target_customer\": \"Hospitals and clinics\", \"estimated_pricing\": \"$500/month per hospital\", \"funding_stage\": \"Seed\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Conditional Invest", "Strong Invest", "Watch"],
+      "ground_truth": {
+        "min_startup_score": 60,
+        "min_investment_score": 55,
+        "min_confidence": 65,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    },
+    {
+      "eval_case_id": "legalai",
+      "startup_name": "LegalAI",
+      "domain": "LegalTech",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"LegalAI\", \"description\": \"An AI-powered legal document automation tool for small law firms, enabling fast contract drafting, review, and compliance checking at 10x speed.\", \"industry\": \"LegalTech\", \"target_customer\": \"Small and mid-size law firms (1-50 attorneys)\", \"estimated_pricing\": \"$299/month per firm\", \"funding_stage\": \"Pre-seed\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Conditional Invest", "Strong Invest"],
+      "ground_truth": {
+        "min_startup_score": 65,
+        "min_investment_score": 60,
+        "min_confidence": 68,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    },
+    {
+      "eval_case_id": "agribot",
+      "startup_name": "AgriBotIQ",
+      "domain": "AgriTech",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"AgriBotIQ\", \"description\": \"Autonomous AI-driven crop monitoring drones for smallholder farmers in emerging markets, providing real-time soil health, disease detection, and yield prediction via satellite-connected mesh.\", \"industry\": \"AgriTech\", \"target_customer\": \"Smallholder farmers in Sub-Saharan Africa and South Asia\", \"estimated_pricing\": \"$15/month subscription per farm\", \"funding_stage\": \"Seed\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Watch", "Conditional Invest"],
+      "ground_truth": {
+        "min_startup_score": 50,
+        "min_investment_score": 45,
+        "min_confidence": 60,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    },
+    {
+      "eval_case_id": "edutwin",
+      "startup_name": "EduTwin",
+      "domain": "EdTech",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"EduTwin\", \"description\": \"A digital twin classroom platform for K-12 education, creating personalized AI tutors for every student that adapt to learning pace, style, and emotional state using computer vision.\", \"industry\": \"EdTech\", \"target_customer\": \"K-12 schools and school districts in the US\", \"estimated_pricing\": \"$25/student/year\", \"funding_stage\": \"Pre-seed\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Conditional Invest", "Watch"],
+      "ground_truth": {
+        "min_startup_score": 55,
+        "min_investment_score": 50,
+        "min_confidence": 63,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    },
+    {
+      "eval_case_id": "supplychain_ai",
+      "startup_name": "SupplyFlow AI",
+      "domain": "Supply Chain / SaaS",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"SupplyFlow AI\", \"description\": \"An AI platform that predicts supply chain disruptions 90 days in advance using geopolitical signals, weather patterns, and supplier financial data, reducing inventory costs by 30%.\", \"industry\": \"Enterprise SaaS\", \"target_customer\": \"Fortune 500 manufacturing companies\", \"estimated_pricing\": \"$50,000/year enterprise license\", \"funding_stage\": \"Series A\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Strong Invest", "Conditional Invest"],
+      "ground_truth": {
+        "min_startup_score": 72,
+        "min_investment_score": 68,
+        "min_confidence": 72,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    },
+    {
+      "eval_case_id": "fincoach",
+      "startup_name": "FinCoach",
+      "domain": "FinTech / Consumer",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"FinCoach\", \"description\": \"An AI personal finance coach that connects to bank accounts and provides real-time spending coaching, debt elimination plans, and automated micro-savings through conversational AI on WhatsApp.\", \"industry\": \"FinTech\", \"target_customer\": \"Millennials and Gen Z with $20k-$80k household income\", \"estimated_pricing\": \"$9.99/month or freemium with premium at $14.99\", \"funding_stage\": \"Seed\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Conditional Invest", "Watch"],
+      "ground_truth": {
+        "min_startup_score": 58,
+        "min_investment_score": 52,
+        "min_confidence": 63,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    },
+    {
+      "eval_case_id": "proptech_vr",
+      "startup_name": "HomeVR",
+      "domain": "PropTech / AR-VR",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"HomeVR\", \"description\": \"A VR/AR platform for real estate agents enabling virtual property tours and AI-generated interior design previews, reducing in-person showings by 60% and accelerating sales cycles.\", \"industry\": \"PropTech\", \"target_customer\": \"Real estate agencies and property developers\", \"estimated_pricing\": \"$199/month per agent\", \"funding_stage\": \"Pre-seed\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Watch", "Conditional Invest"],
+      "ground_truth": {
+        "min_startup_score": 55,
+        "min_investment_score": 50,
+        "min_confidence": 62,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    },
+    {
+      "eval_case_id": "cyberguard",
+      "startup_name": "CyberGuard AI",
+      "domain": "CyberSecurity / SaaS",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"CyberGuard AI\", \"description\": \"An autonomous AI cybersecurity platform for SMBs that detects, isolates, and remediates zero-day threats in real time with no security team required — SOC-as-a-Service at SMB pricing.\", \"industry\": \"CyberSecurity\", \"target_customer\": \"SMBs with 10-500 employees lacking in-house security\", \"estimated_pricing\": \"$499/month flat for up to 200 endpoints\", \"funding_stage\": \"Seed\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Strong Invest", "Conditional Invest"],
+      "ground_truth": {
+        "min_startup_score": 70,
+        "min_investment_score": 65,
+        "min_confidence": 70,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    },
+    {
+      "eval_case_id": "mentalhealth_ai",
+      "startup_name": "MindBridge",
+      "domain": "HealthTech / Mental Health",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "{\"name\": \"MindBridge\", \"description\": \"An AI-powered mental health companion app providing 24/7 CBT-based therapy conversations, mood tracking, crisis detection, and seamless escalation to licensed therapists when needed.\", \"industry\": \"HealthTech\", \"target_customer\": \"Adults aged 18-40 seeking mental health support\", \"estimated_pricing\": \"$29.99/month consumer or $15/employee/month B2B wellness\", \"funding_stage\": \"Seed\"}"}]
+      },
+      "expected_routing": ["research_agent", "risk_agent", "product_agent", "finance_agent", "advocate_agent", "investor_agent", "hitl_review_node", "growth_agent", "simulator_agent", "pitchdeck_agent", "security_agent", "executive_summary_agent"],
+      "expected_recommendation_options": ["Conditional Invest", "Watch"],
+      "ground_truth": {
+        "min_startup_score": 60,
+        "min_investment_score": 55,
+        "min_confidence": 65,
+        "market_size_mentioned": true,
+        "competitor_analysis_required": true,
+        "financial_projections_required": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,2304 @@
+{
+  "grade_results": [
+    {
+      "eval_case_id": "solarex",
+      "startup_name": "Solarex",
+      "domain": "CleanTech",
+      "graded_at": "2026-06-29T20:58:12.149808+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 60,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 215,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 65,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1256,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 92,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    },
+    {
+      "eval_case_id": "medichain",
+      "startup_name": "MediChain",
+      "domain": "HealthTech",
+      "graded_at": "2026-06-29T20:58:12.150106+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 55,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 216,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 60,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1265,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 94,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    },
+    {
+      "eval_case_id": "legalai",
+      "startup_name": "LegalAI",
+      "domain": "LegalTech",
+      "graded_at": "2026-06-29T20:58:12.150340+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 60,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 215,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 65,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1256,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 92,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    },
+    {
+      "eval_case_id": "agribot",
+      "startup_name": "AgriBotIQ",
+      "domain": "AgriTech",
+      "graded_at": "2026-06-29T20:58:12.150542+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 45,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 214,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 50,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1259,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 94,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    },
+    {
+      "eval_case_id": "edutwin",
+      "startup_name": "EduTwin",
+      "domain": "EdTech",
+      "graded_at": "2026-06-29T20:58:12.150743+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 50,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 212,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 55,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1247,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 92,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    },
+    {
+      "eval_case_id": "supplychain_ai",
+      "startup_name": "SupplyFlow AI",
+      "domain": "Supply Chain / SaaS",
+      "graded_at": "2026-06-29T20:58:12.150941+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 68,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 225,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 72,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1304,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 98,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    },
+    {
+      "eval_case_id": "fincoach",
+      "startup_name": "FinCoach",
+      "domain": "FinTech / Consumer",
+      "graded_at": "2026-06-29T20:58:12.151120+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 52,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 224,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 58,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1286,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 93,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    },
+    {
+      "eval_case_id": "proptech_vr",
+      "startup_name": "HomeVR",
+      "domain": "PropTech / AR-VR",
+      "graded_at": "2026-06-29T20:58:12.151338+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 50,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 222,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 55,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1274,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 91,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    },
+    {
+      "eval_case_id": "cyberguard",
+      "startup_name": "CyberGuard AI",
+      "domain": "CyberSecurity / SaaS",
+      "graded_at": "2026-06-29T20:58:12.151533+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 65,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 226,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 70,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1307,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 98,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    },
+    {
+      "eval_case_id": "mentalhealth_ai",
+      "startup_name": "MindBridge",
+      "domain": "HealthTech / Mental Health",
+      "graded_at": "2026-06-29T20:58:12.151716+00:00",
+      "weighted_score": 0.9961,
+      "weighted_pct": 99.6,
+      "overall_grade": "A",
+      "metrics": [
+        {
+          "metric": "research_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "tam_sam_som_complete": [
+              true,
+              true,
+              true
+            ],
+            "competitors_with_swot": 2,
+            "market_trends_count": 3,
+            "opportunities_count": 2,
+            "confidence_score": 78,
+            "sub_scores": {
+              "market_size": 0.3,
+              "competitors": 0.3,
+              "trends": 0.2,
+              "opportunities": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "product_quality",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "mvp_features_count": 4,
+            "must_have_count": 2,
+            "user_stories_count": 3,
+            "tech_stack_count": 5,
+            "confidence_score": 80,
+            "sub_scores": {
+              "features": 0.3,
+              "user_stories": 0.25,
+              "tech_stack": 0.25,
+              "confidence": 0.2
+            }
+          }
+        },
+        {
+          "metric": "financial_accuracy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "has_critique": true,
+            "unit_econ_keys_found": [
+              "Gross Margin",
+              "CAC",
+              "LTV:CAC",
+              "LTV",
+              "Payback"
+            ],
+            "unit_econ_keys_missing": [],
+            "projections_years": [
+              "Year 2",
+              "Year 1",
+              "Year 3"
+            ],
+            "ltv_cac_valid": true,
+            "cost_structure_items": 4,
+            "confidence_score": 76,
+            "sub_scores": {
+              "critique": 0.15,
+              "unit_econ": 0.35,
+              "projections": 0.3,
+              "ltv_cac": 0.1,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "investor_readiness",
+          "score": 0.9999999999999999,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "investment_readiness_score": 72,
+            "min_required_score": 55,
+            "score_meets_threshold": true,
+            "recommendation": "Conditional Invest",
+            "recommendation_valid": true,
+            "strengths_count": 3,
+            "concerns_count": 3,
+            "confidence_score": 74,
+            "sub_scores": {
+              "score_threshold": 0.3,
+              "recommendation": 0.15,
+              "strengths": 0.2,
+              "concerns": 0.2,
+              "confidence": 0.15
+            }
+          }
+        },
+        {
+          "metric": "growth_strategy",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "channels_count": 3,
+            "channels": [
+              "Content Marketing + SEO",
+              "Direct Sales Outreach",
+              "Partner / Reseller Network"
+            ],
+            "strategy_length_chars": 232,
+            "roadmap_months_complete": 3,
+            "startup_score": 74,
+            "min_startup_score": 60,
+            "confidence_score": 77,
+            "sub_scores": {
+              "channels": 0.2,
+              "strategy": 0.2,
+              "roadmap": 0.35,
+              "startup_score": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "pitch_deck_quality",
+          "score": 0.9611111111111111,
+          "pct": 96,
+          "grade": "A",
+          "details": {
+            "slide_count": 10,
+            "markdown_length": 1316,
+            "required_keywords_found": [
+              "problem",
+              "solution",
+              "market",
+              "product",
+              "model",
+              "competition",
+              "financ",
+              "ask"
+            ],
+            "keywords_missing": [
+              "team"
+            ],
+            "valid_titled_slides": 10,
+            "confidence_score": 80,
+            "sub_scores": {
+              "slide_count": 0.25,
+              "keywords": 0.311,
+              "md_length": 0.15,
+              "slide_titles": 0.15,
+              "confidence": 0.1
+            }
+          }
+        },
+        {
+          "metric": "routing_correctness",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "expected_nodes": [
+              "research_agent",
+              "risk_agent",
+              "product_agent",
+              "finance_agent",
+              "advocate_agent",
+              "investor_agent",
+              "hitl_review_node",
+              "growth_agent",
+              "simulator_agent",
+              "pitchdeck_agent",
+              "security_agent",
+              "executive_summary_agent"
+            ],
+            "missing_nodes": [],
+            "executed_count": 23,
+            "expected_count": 12,
+            "coverage_pct": 100.0,
+            "hitl_triggered": true,
+            "phase_order_correct": 5,
+            "phase_pairs_checked": 5,
+            "error_count": 0,
+            "sub_scores": {
+              "node_coverage": 0.6,
+              "hitl": 0.15,
+              "phase_order": 0.15,
+              "no_errors": 0.1
+            }
+          }
+        },
+        {
+          "metric": "security",
+          "score": 1.0,
+          "pct": 100,
+          "grade": "A",
+          "details": {
+            "is_safe": true,
+            "issues_count": 0,
+            "issues": [],
+            "pii_patterns_detected": [],
+            "sanitized_report_length": 95,
+            "confidence_score": 92,
+            "sub_scores": {
+              "is_safe": 0.4,
+              "no_pii": 0.25,
+              "report": 0.2,
+              "no_issues": 0.15
+            }
+          }
+        }
+      ],
+      "final_metrics": {
+        "startup_score": 74,
+        "investment_score": 72,
+        "recommendation": "Conditional Invest",
+        "overall_confidence": 78
+      },
+      "errors": []
+    }
+  ]
+}
