@@ -51,6 +51,7 @@ from app.nodes.risk import RISK_INSTRUCTION
 from app.nodes.security import SECURITY_INSTRUCTION
 from app.nodes.simulator import SIMULATOR_INSTRUCTION
 from app.orchestrator import orchestrator_phase3_gate, orchestrator_phase4_gate
+from app.reporting import get_outputs_dir, report_filename
 from app.schemas import (
     AdvocateOutput,
     ExecutiveSummaryOutput,
@@ -419,7 +420,7 @@ async def _run_mcp_client(
 
             res_pdf = await session.call_tool(
                 "generate_pdf_report",
-                arguments={"markdown_path": f"./outputs/{filename}"},
+                arguments={"markdown_path": filename},
             )
             logger.info("[mcp_write_node] %s", res_pdf.content[0].text)
 
@@ -454,8 +455,8 @@ def mcp_write_node(ctx: Context, node_input: Any) -> dict[str, Any]:
     fields["session_id"] = ctx.session.id
 
     startup_name = fields["startup_name"]
-    filename = f"{startup_name.lower().replace(' ', '_')}_report.md"
-    report_path = f"./outputs/{filename}"
+    filename = report_filename(startup_name, ".md")
+    report_path = get_outputs_dir() / filename
 
     try:
         loop = asyncio.get_running_loop()
@@ -468,7 +469,7 @@ def mcp_write_node(ctx: Context, node_input: Any) -> dict[str, Any]:
     else:
         asyncio.run(_run_mcp_client(filename, md_content, fields))
 
-    return {"status": "success", "report_path": report_path}
+    return {"status": "success", "report_path": str(report_path)}
 
 
 # ─────────────────────────────────────────────────────────────────────────────

@@ -26,6 +26,8 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from app.reporting import get_outputs_dir, report_filename
+
 # Force UTF-8 output on Windows
 os.environ["PYTHONUTF8"] = "1"
 import io
@@ -906,14 +908,14 @@ def stub_mcp_write(ctx: Context, node_input: Any):
     try:
         from app.mcp_server import generate_pdf_report, write_report_file, write_runs_db
 
-        filename = f"{startup_name.lower().replace(' ', '_')}_report.md"
+        filename = report_filename(startup_name, ".md")
 
         # 1. File write
         res_file = write_report_file(filename, md)
         log(f"  \u2713 {res_file}", GREEN)
 
         # 2. PDF generate
-        res_pdf = generate_pdf_report(f"./outputs/{filename}")
+        res_pdf = generate_pdf_report(filename)
         log(f"  \u2713 {res_pdf}", GREEN)
 
         # 3. DB write
@@ -938,7 +940,7 @@ def stub_mcp_write(ctx: Context, node_input: Any):
 
     return {
         "status": "success",
-        "report_path": f"./outputs/{startup_name.lower().replace(' ', '_')}_report.md",
+        "report_path": str(get_outputs_dir() / report_filename(startup_name, ".md")),
     }
 
 

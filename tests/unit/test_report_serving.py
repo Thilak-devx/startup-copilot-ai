@@ -3,6 +3,8 @@ import uuid
 from pathlib import Path
 
 import serve_frontend
+from app.mcp_server import generate_pdf_report
+from app.reporting import report_filename
 
 
 def _workspace_test_dir() -> Path:
@@ -94,6 +96,46 @@ def test_pdf_report_is_generated_from_hydrated_markdown(monkeypatch) -> None:
     assert pdf_path.exists()
     assert pdf_path.stat().st_size > 0
     assert pdf_path.with_suffix(".md").exists()
+
+
+def test_existing_pdf_report_is_reused(monkeypatch) -> None:
+    test_dir = _workspace_test_dir()
+    db_path = test_dir / "startup_copilot.db"
+    outputs_dir = test_dir / "outputs"
+    outputs_dir.mkdir(parents=True)
+    _create_runs_db(db_path, "# Startup Founder Package: Solarex")
+
+    existing_pdf = outputs_dir / report_filename("Solarex", ".pdf")
+    existing_pdf.write_bytes(b"existing pdf bytes")
+
+    monkeypatch.setattr(serve_frontend, "DB_PATH", db_path)
+    monkeypatch.setattr(serve_frontend, "OUTPUTS_DIR", outputs_dir)
+
+    response = serve_frontend.get_report_file(existing_pdf.name)
+
+    assert Path(response.path) == existing_pdf.resolve()
+    assert existing_pdf.read_bytes() == b"existing pdf bytes"
+
+
+def test_pdf_generation_is_deterministic() -> None:
+    test_dir = _workspace_test_dir()
+    markdown_path = test_dir / report_filename("Solarex", ".md")
+    markdown_path.write_text(
+        "# Startup Founder Package: Solarex\n\n"
+        "| Metric | Score |\n"
+        "|---|---|\n"
+        "| Startup Score | 81/100 |\n",
+        encoding="utf-8",
+    )
+
+    generate_pdf_report(str(markdown_path))
+    pdf_path = markdown_path.with_suffix(".pdf")
+    first_pdf = pdf_path.read_bytes()
+
+    pdf_path.unlink()
+    generate_pdf_report(str(markdown_path))
+
+    assert pdf_path.read_bytes() == first_pdf
 
 
 def test_report_list_includes_completed_runs_without_output_files(monkeypatch) -> None:

@@ -15,25 +15,35 @@ Provides specialised tools for:
 from __future__ import annotations
 
 import logging
-import os
 import sqlite3
 from pathlib import Path
 from typing import Any
 
 from mcp.server.fastmcp import FastMCP
+from reportlab import rl_config
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
+from app.reporting import (
+    get_db_path,
+    get_outputs_dir,
+    is_pdf_current,
+    resolve_markdown_path,
+    safe_report_path,
+    write_text_if_changed,
+)
+
 logger = logging.getLogger(__name__)
+rl_config.invariant = 1
 
 # Create the MCP server
 mcp = FastMCP("StartupCopilotServer")
 
 # Configuration settings configurable via environment variables
-DB_PATH = Path(os.environ.get("STARTUP_COPILOT_DB", "startup_copilot.db"))
-OUTPUTS_DIR = Path(os.environ.get("STARTUP_COPILOT_OUTPUTS_DIR", "./outputs"))
+DB_PATH = get_db_path()
+OUTPUTS_DIR = get_outputs_dir()
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers & Database Manager
@@ -90,6 +100,7 @@ class DatabaseManager:
 
     def get_write_connection(self) -> sqlite3.Connection:
         """Return a read-write SQLite connection."""
+        self.db_path.parent.mkdir(parents=True, exist_ok=True)
         conn = sqlite3.connect(self.db_path, timeout=30.0)
         conn.row_factory = sqlite3.Row
         return conn
@@ -233,17 +244,12 @@ def write_report_file(filename: str, content: str) -> str:
     The filename is sanitised to its basename to prevent path-traversal attacks.
     """
     try:
-        OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-        # Prevent path traversal: only the basename is used
-        safe_name = Path(filename).name
-        report_path = (OUTPUTS_DIR / safe_name).resolve()
-
-        # Double-check the resolved path is still inside OUTPUTS_DIR
-        if not str(report_path).startswith(str(OUTPUTS_DIR.resolve())):
-            return "Error: Filename resolves outside the outputs directory."
-
-        report_path.write_text(content, encoding="utf-8")
-        return f"Success: Report written to {report_path}"
+        report_path = safe_report_path(OUTPUTS_DIR, filename, frozenset({".md"}))
+        changed = write_text_if_changed(report_path, content)
+        action = "written" if changed else "reused"
+        return f"Success: Report {action} at {report_path}"
+    except ValueError as exc:
+        return f"Filesystem write error: {exc}"
     except Exception as exc:
         logger.exception("write_report_file: failed")
         return f"Filesystem write error: {exc}"
@@ -385,13 +391,14 @@ def _flush_table(
 def generate_pdf_report(markdown_path: str) -> str:
     """Read a Markdown report file and compile it into a styled PDF inside the configured outputs directory."""
     try:
-        md_file = Path(markdown_path)
-        if not md_file.is_absolute() and not md_file.exists():
-            md_file = OUTPUTS_DIR / md_file.name
+        md_file = resolve_markdown_path(markdown_path, OUTPUTS_DIR)
         if not md_file.exists():
             return f"Error: Markdown file not found at {markdown_path}"
 
         pdf_path = md_file.with_suffix(".pdf")
+        if is_pdf_current(md_file, pdf_path):
+            return f"Success: PDF report reused at {pdf_path}"
+
         lines = md_file.read_text(encoding="utf-8").splitlines()
 
         doc = SimpleDocTemplate(

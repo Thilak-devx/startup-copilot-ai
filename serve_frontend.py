@@ -14,8 +14,6 @@ Serves static frontend dashboard assets and exposes API endpoints for:
 from __future__ import annotations
 
 import logging
-import os
-import re
 import sqlite3
 import subprocess
 import sys
@@ -27,14 +25,22 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
+from app.reporting import (
+    get_db_path,
+    get_outputs_dir,
+    report_filename,
+    report_slug,
+    safe_report_path,
+    startup_slug_from_report_filename,
+    write_text_if_changed,
+)
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).parent.resolve()
-DB_PATH = Path(os.environ.get("STARTUP_COPILOT_DB", PROJECT_ROOT / "startup_copilot.db"))
-OUTPUTS_DIR = Path(
-    os.environ.get("STARTUP_COPILOT_OUTPUTS_DIR", PROJECT_ROOT / "outputs")
-)
+DB_PATH = get_db_path()
+OUTPUTS_DIR = get_outputs_dir()
 FRONTEND_DIR = PROJECT_ROOT / "frontend"
 
 app = FastAPI(
@@ -61,30 +67,11 @@ class StartupInput(BaseModel):
     funding_stage: str
 
 
-def _normalise_report_slug(value: str) -> str:
-    return re.sub(r"[\s_-]+", "_", value.strip().lower()).strip("_")
-
-
-def _startup_slug_from_report_filename(filename: str) -> str:
-    stem = Path(filename).stem
-    if stem.endswith("_report"):
-        stem = stem[: -len("_report")]
-    return _normalise_report_slug(stem)
-
-
-def _report_filename_for_startup(startup_name: str, suffix: str) -> str:
-    return f"{startup_name.lower().replace(' ', '_')}_report{suffix}"
-
-
 def _safe_report_path(filename: str) -> Path:
-    safe_name = Path(filename).name
-    safe_path = (OUTPUTS_DIR / safe_name).resolve()
-    outputs_root = OUTPUTS_DIR.resolve()
-    if safe_path.suffix not in {".md", ".pdf"} or not str(safe_path).startswith(
-        str(outputs_root)
-    ):
+    try:
+        return safe_report_path(OUTPUTS_DIR, filename)
+    except ValueError:
         raise HTTPException(status_code=404, detail="File not found.")
-    return safe_path
 
 
 def _runs_table_columns(conn: sqlite3.Connection) -> set[str]:
@@ -98,124 +85,37 @@ def _row_value(row: sqlite3.Row, key: str, default: Any = "") -> Any:
     return row[key] if key in row.keys() and row[key] is not None else default
 
 
-def _gate_log(conn: sqlite3.Connection, session_id: str, gate_names: tuple[str, ...]) -> str:
-    if not session_id:
-        return ""
-    placeholders = ",".join("?" for _ in gate_names)
-    try:
-        row = conn.execute(
-            f"""
-            SELECT log_json FROM orchestrator_logs
-            WHERE session_id = ? AND gate IN ({placeholders})
-            ORDER BY id DESC LIMIT 1
-            """,
-            (session_id, *gate_names),
-        ).fetchone()
-    except sqlite3.Error:
-        return ""
-    return row["log_json"] if row and row["log_json"] else ""
-
-
-def _fallback_markdown_from_run(conn: sqlite3.Connection, row: sqlite3.Row) -> str:
-    startup_name = _row_value(row, "startup_name", "Unknown Startup")
-    startup_score = _row_value(row, "startup_score", 0)
-    investment_score = _row_value(row, "investment_readiness_score", 0)
-    overall_confidence = _row_value(
-        row,
-        "overall_confidence",
-        _row_value(row, "overall_confidence_score", 0),
-    )
-    recommendation = _row_value(row, "recommendation", "Unknown")
-    executive_summary = _row_value(row, "executive_summary")
-    startup_health = _row_value(row, "startup_health", executive_summary)
-    recommended_next_action = _row_value(
-        row, "recommended_next_action", recommendation
-    )
-    session_id = _row_value(row, "session_id")
-
-    lines = [
-        f"# Startup Founder Package: {startup_name}",
-        "",
-        f"> **Overall Confidence Score: {overall_confidence}/100**  ",
-        f"> **Recommendation: {recommendation}**  ",
-        f"> **Recommended Next Action: {recommended_next_action}**",
-        "",
-        "---",
-        "",
-        "## Executive Summary",
-        "",
-        executive_summary,
-        "",
-        "## Startup Health",
-        "",
-        startup_health,
-        "",
-        "## Key Scores",
-        "",
-        "| Metric | Score |",
-        "|---|---|",
-        f"| Startup Score | {startup_score}/100 |",
-        f"| Investment Readiness | {investment_score}/100 |",
-        f"| Overall Confidence | {overall_confidence}/100 |",
-        "",
-    ]
-
-    gate3_log = _gate_log(conn, session_id, ("gate3", "phase3"))
-    gate4_log = _gate_log(conn, session_id, ("gate4", "phase4"))
-    if gate3_log or gate4_log:
-        lines += ["## Orchestrator Decision Log", ""]
-        if gate3_log:
-            lines += [f"### Gate 3 (Pre-HITL)\n```json\n{gate3_log}\n```", ""]
-        if gate4_log:
-            lines += [f"### Gate 4 (Pre-Security)\n```json\n{gate4_log}\n```", ""]
-
-    return "\n".join(str(line) for line in lines)
-
-
-def _find_run_for_report(filename: str) -> tuple[sqlite3.Connection, sqlite3.Row] | None:
+def _report_markdown_from_db(filename: str) -> str | None:
     if not DB_PATH.exists():
         return None
 
-    conn = sqlite3.connect(str(DB_PATH))
+    target_slug = startup_slug_from_report_filename(filename)
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     try:
-        target_slug = _startup_slug_from_report_filename(filename)
-        rows = conn.execute("SELECT * FROM runs ORDER BY id DESC").fetchall()
+        if "report_markdown" not in _runs_table_columns(conn):
+            return None
+        rows = conn.execute(
+            """
+            SELECT startup_name, report_markdown
+            FROM runs
+            WHERE report_markdown IS NOT NULL AND report_markdown != ''
+            ORDER BY id DESC
+            """
+        ).fetchall()
         for row in rows:
-            startup_name = _row_value(row, "startup_name")
-            if _normalise_report_slug(startup_name) == target_slug:
-                return conn, row
-    except sqlite3.Error:
-        conn.close()
-        raise
-
-    conn.close()
-    return None
-
-
-def _markdown_for_report(filename: str) -> str | None:
-    found = _find_run_for_report(filename)
-    if not found:
+            if report_slug(_row_value(row, "startup_name")) == target_slug:
+                return str(row["report_markdown"])
         return None
-
-    conn, row = found
-    try:
-        columns = _runs_table_columns(conn)
-        if "report_markdown" in columns:
-            report_markdown = _row_value(row, "report_markdown")
-            if report_markdown:
-                return str(report_markdown)
-        return _fallback_markdown_from_run(conn, row)
     finally:
         conn.close()
 
 
 def _hydrate_markdown_file(filename: str, target_path: Path) -> bool:
-    markdown = _markdown_for_report(filename)
+    markdown = _report_markdown_from_db(filename)
     if not markdown:
         return False
-    OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    target_path.write_text(markdown, encoding="utf-8")
+    write_text_if_changed(target_path, markdown)
     return True
 
 
@@ -252,7 +152,16 @@ def _report_filenames_from_db() -> set[str]:
     try:
         conn = sqlite3.connect(str(DB_PATH))
         conn.row_factory = sqlite3.Row
-        rows = conn.execute("SELECT startup_name FROM runs ORDER BY id DESC").fetchall()
+        if "report_markdown" not in _runs_table_columns(conn):
+            conn.close()
+            return set()
+        rows = conn.execute(
+            """
+            SELECT startup_name FROM runs
+            WHERE report_markdown IS NOT NULL AND report_markdown != ''
+            ORDER BY id DESC
+            """
+        ).fetchall()
         conn.close()
     except sqlite3.Error:
         return set()
@@ -261,8 +170,8 @@ def _report_filenames_from_db() -> set[str]:
     for row in rows:
         startup_name = _row_value(row, "startup_name")
         if startup_name:
-            filenames.add(_report_filename_for_startup(startup_name, ".md"))
-            filenames.add(_report_filename_for_startup(startup_name, ".pdf"))
+            filenames.add(report_filename(startup_name, ".md"))
+            filenames.add(report_filename(startup_name, ".pdf"))
     return filenames
 
 
