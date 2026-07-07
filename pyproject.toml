@@ -17,6 +17,7 @@ dependencies = [
     "mcp>=0.1.0",
     "reportlab>=4.0.0",
     "markdown>=3.6",
+    "nest-asyncio>=1.6.0,<2.0.0",
 ]
 requires-python = ">=3.11,<3.15"
 
@@ -25,7 +26,6 @@ requires-python = ">=3.11,<3.15"
 dev = [
     "pytest>=9.0.2,<10.0.0",
     "pytest-asyncio>=1.0.0,<2.0.0",
-    "nest-asyncio>=1.6.0,<2.0.0",
 ]
 
 [project.optional-dependencies]
