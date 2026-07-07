@@ -436,6 +436,7 @@ async def _run_mcp_client(
                     "startup_health": fields["startup_health"],
                     "recommended_next_action": fields["recommended_next_action"],
                     "overall_confidence": int(fields["overall_confidence"]),
+                    "report_markdown": md_content,
                     "gate3_log": fields["gate3_log"] or "",
                     "gate4_log": fields["gate4_log"] or "",
                 },

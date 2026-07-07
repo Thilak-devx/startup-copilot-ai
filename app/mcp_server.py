@@ -43,6 +43,7 @@ _SCHEMA_UPGRADES: list[tuple[str, str]] = [
     ("startup_health", "TEXT"),
     ("recommended_next_action", "TEXT"),
     ("overall_confidence", "INTEGER"),
+    ("report_markdown", "TEXT"),
 ]
 
 _CREATE_RUNS = """
@@ -58,6 +59,7 @@ _CREATE_RUNS = """
         startup_health             TEXT,
         recommended_next_action    TEXT,
         overall_confidence         INTEGER,
+        report_markdown            TEXT,
         timestamp                  DATETIME DEFAULT CURRENT_TIMESTAMP
     )
 """
@@ -121,8 +123,9 @@ class DatabaseManager:
                 INSERT INTO runs (
                     session_id, startup_name, startup_score, investment_readiness_score,
                     overall_confidence_score, recommendation, executive_summary,
-                    startup_health, recommended_next_action, overall_confidence
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    startup_health, recommended_next_action, overall_confidence,
+                    report_markdown
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     run_data["session_id"],
@@ -135,6 +138,7 @@ class DatabaseManager:
                     run_data["startup_health"],
                     run_data["recommended_next_action"],
                     run_data["overall_confidence"],
+                    run_data.get("report_markdown", ""),
                 ),
             )
 
@@ -189,6 +193,7 @@ def write_runs_db(
     startup_health: str,
     recommended_next_action: str,
     overall_confidence: int,
+    report_markdown: str = "",
     gate3_log: str | None = None,
     gate4_log: str | None = None,
 ) -> str:
@@ -204,6 +209,7 @@ def write_runs_db(
         "startup_health": startup_health,
         "recommended_next_action": recommended_next_action,
         "overall_confidence": overall_confidence,
+        "report_markdown": report_markdown,
     }
     gate_logs = [("gate3", gate3_log), ("gate4", gate4_log)]
 
@@ -380,6 +386,8 @@ def generate_pdf_report(markdown_path: str) -> str:
     """Read a Markdown report file and compile it into a styled PDF inside the configured outputs directory."""
     try:
         md_file = Path(markdown_path)
+        if not md_file.is_absolute() and not md_file.exists():
+            md_file = OUTPUTS_DIR / md_file.name
         if not md_file.exists():
             return f"Error: Markdown file not found at {markdown_path}"
 

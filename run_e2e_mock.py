@@ -928,6 +928,7 @@ def stub_mcp_write(ctx: Context, node_input: Any):
             startup_health=exec_text,
             recommended_next_action=recommendation,
             overall_confidence=int(overall_conf),
+            report_markdown=md,
             gate3_log=gate3,
             gate4_log=gate4,
         )
