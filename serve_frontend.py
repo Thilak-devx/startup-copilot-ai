@@ -58,6 +58,163 @@ app.add_middleware(
 )
 
 
+@app.on_event("startup")
+def _seed_demo_data_on_startup() -> None:
+    """Seed DB + outputs/ with a Solarex demo run on first startup.
+
+    Render's ephemeral filesystem means the DB and output files are lost
+    after each deploy.  This handler ensures a completed analysis always
+    exists so the Reports page, Markdown export, and PDF export work
+    without manual intervention.
+    """
+    if DB_PATH.exists():
+        try:
+            conn = sqlite3.connect(str(DB_PATH))
+            count = conn.execute("SELECT COUNT(*) FROM runs").fetchone()[0]
+            conn.close()
+            if count > 0:
+                logger.info(
+                    "Seed skipped: DB already has %d run(s).", count
+                )
+                return
+        except (sqlite3.Error, IndexError, TypeError):
+            pass
+
+    logger.info("Seeding Solarex demo run into DB and outputs/ ...")
+    OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+
+    startup_name = "Solarex"
+    recommendation = "Conditional Invest"
+    exec_summary = (
+        "Solarex presents a compelling Seed investment opportunity in "
+        "the $42B community solar segment, backed by strong unit "
+        "economics (LTV:CAC 8.5x) and a defensible HOA distribution "
+        "channel. The primary risk \u2014 utility competition \u2014 is "
+        "addressable through HOA exclusivity contracts if executed in "
+        "Month 1. With regulatory tailwinds and no AI-native competitor "
+        "at scale, the window is open for the next 18\u201324 months."
+    )
+    startup_health = (
+        "Solarex is in strong early health with validated unit "
+        "economics, a clear distribution moat via HOA partnerships, "
+        "and regulatory tailwinds from the IRA."
+    )
+    next_action = (
+        "Sign 3 HOA exclusivity contracts and validate $85 CAC "
+        "assumption via Month 1 pilot before committing Series A "
+        "milestone capital."
+    )
+
+    md = (
+        f"# Startup Founder Package: {startup_name}\n\n"
+        f"> **Overall Confidence Score: 81/100**  \n"
+        f"> **Recommendation: {recommendation}**  \n"
+        f"> **Recommended Next Action: {next_action}**\n\n"
+        "---\n\n"
+        "## Executive Summary\n\n"
+        f"{exec_summary}\n\n"
+        "## Startup Health\n\n"
+        f"{startup_health}\n\n"
+        "## Key Scores\n\n"
+        "| Metric | Score |\n"
+        "|---|---|\n"
+        "| Startup Score | 78/100 |\n"
+        "| Investment Readiness | 74/100 |\n"
+        "| Overall Confidence | 81/100 |\n\n"
+        "## Top Strengths\n\n"
+        "- LTV:CAC of 8.5x via HOA channel \u2014 validated against "
+        "Sunrun's $400 CAC benchmark\n"
+        "- No AI-native community solar competitor at scale \u2014 "
+        "first-mover window\n"
+        "- IRA regulatory tailwinds reduce customer acquisition "
+        "friction\n\n"
+        "## Top Risks\n\n"
+        "- Utility competition: 40% TAM reduction if top-3 utilities "
+        "enter \u2014 mitigate with HOA exclusivity\n"
+        "- Unvalidated CAC assumption of $85 \u2014 only comparable is "
+        "Sunrun's $400\n"
+        "- Regulatory complexity across 50 states \u2014 mitigate with "
+        "Head of Regulatory hire\n\n"
+        "## Pitch Deck\n\n"
+        "# Solarex \u2014 Seed Round Pitch Deck\n\n"
+        "## Slide 1: Title\n"
+        "**Solarex** | *AI-powered community solar energy sharing*\n"
+        "Team: CEO (10yr energy veteran) | CTO (Ex-Google ML) | "
+        "Head of Regulatory (hiring)\n\n"
+        "## Slide 2: Problem\n"
+        "30% of residential solar energy is wasted. Community sharing "
+        "is manual, opaque, and inequitable.\n\n"
+        "## Slide 3: Solution\n"
+        "Solarex optimises energy sharing across HOA communities \u2014 "
+        "automatically, transparently, profitably.\n\n"
+        "## Slide 4: Market Size\n"
+        "- **TAM**: $850B global renewable energy market (2030)\n"
+        "- **SAM**: $42B community solar residential segment\n"
+        "- **SOM**: $2.1B capturable in 5 years\n\n"
+        "## Slide 5: Product & MVP\n"
+        "1. Homeowner: real-time energy surplus visibility\n"
+        "2. HOA manager: community savings dashboard\n"
+        "3. Resident: automatic bill credits\n\n"
+        "## Slide 6: Business Model\n"
+        "10% transaction fee | LTV:CAC = 8.5x | Payback: 4.3 months\n"
+        "Year 1: $480K ARR | Year 2: $3.2M ARR | "
+        "Year 3: $11.4M ARR\n\n"
+        "## Slide 7: Competition\n"
+        "| Competitor | Weakness | Our Edge |\n"
+        "|---|---|---|\n"
+        "| Sunrun | No community model, $400 CAC | "
+        "$85 CAC via HOA, AI optimizer |\n"
+        "| EnergySage | No AI, no P2P trading | "
+        "Real-time AI optimization |\n\n"
+        "## Slide 8: Go-To-Market\n"
+        "HOA Direct Outreach \u2192 exclusivity clause\n"
+        "Month 1: 3 HOA pilots | Month 2: 60 households | "
+        "Month 3: $20K MRR\n\n"
+        "## Slide 9: Financial Projections\n"
+        "| Year | ARR |\n"
+        "|---|---|\n"
+        "| Year 1 | $480K |\n"
+        "| Year 2 | $3.2M |\n"
+        "| Year 3 | $11.4M |\n\n"
+        "## Slide 10: The Ask\n"
+        "Raising $1.5M Seed. Use of funds: Engineering (45%), "
+        "Sales/BD (30%), Regulatory (15%), Ops (10%)\n"
+    )
+
+    try:
+        from app.mcp_server import (
+            generate_pdf_report,
+            write_report_file,
+            write_runs_db,
+        )
+
+        filename = report_filename(startup_name, ".md")
+
+        res_file = write_report_file(filename, md)
+        logger.info("Seed: %s", res_file)
+
+        res_pdf = generate_pdf_report(filename)
+        logger.info("Seed: %s", res_pdf)
+
+        res_db = write_runs_db(
+            session_id="seed-session",
+            startup_name=startup_name,
+            startup_score=78,
+            investment_readiness_score=74,
+            overall_confidence_score=81,
+            recommendation=recommendation,
+            executive_summary=exec_summary,
+            startup_health=startup_health,
+            recommended_next_action=next_action,
+            overall_confidence=81,
+            report_markdown=md,
+        )
+        logger.info("Seed: %s", res_db)
+        logger.info("Solarex demo seed complete.")
+    except Exception as exc:
+        logger.error("Seed failed: %s", exc)
+
+
 class StartupInput(BaseModel):
     name: str
     industry: str
